@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Xcode
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.pbxuser
+DerivedData/
+build/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+*.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Credentials / Secrets
+*.p12
+*.mobileprovision
+*.cer
+GoogleService-Info.plist
+secrets.xcconfig
+
+# Build logs
+build_log.txt
+
+# Scripts (generated/utility)
+add_files_to_xcode.rb
+add_new_files.rb
+
+# Playground
+timeline.xctimeline
+playground.xcworkspace
+
+PresentMemo/Models/MLModels/*
+PresentMemo/llama.xcframework
+scripts/*
+build_log.txt

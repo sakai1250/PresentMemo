@@ -1,0 +1,325 @@
+English,Japanese
+Machine Learning,機械学習
+Deep Learning,深層学習
+Neural Network,ニューラルネットワーク
+Generative AI,生成AI
+Large Language Model,大規模言語モデル (LLM)
+Feature,特徴量
+Weight,重み
+Bias,バイアス / 偏置
+Variance,バリアンス / 分散
+Accuracy,正解率
+Precision,適合率
+Recall,再現率
+IoU (Intersection over Union),IoU
+Instance,インスタンス / サンプル
+Label,正解ラベル / 教師データ
+Noise,ノイズ
+Data Augmentation,データ拡張
+Overfitting,過学習
+Underfitting,未学習
+Validation,検証（検証用データ）
+Epoch,エポック
+Batch,バッチ
+Loss,損失 / 誤差
+Gradient,勾配
+Layer,レイヤー / 層
+Hidden Layer,隠れ層 / 中間層
+Computer Vision,コンピュータビジョン
+Classification,画像分類
+Detection,物体検出
+Segmentation,セグメンテーション（領域分割）
+Bounding Box,バウンディングボックス
+Hallucination,ハルシネーション
+Prompt,プロンプト
+Token,トークン
+Embedding,埋め込み / エンベディング
+Corpus,コーパス
+Environment,環境
+State,状態
+Reward,報酬
+Policy,方策 / ポリシー
+Attention Mechanism,アテンション機構 / 注意機構
+Self-Attention,自己アテンション / セルフアテンション
+Query,クエリ
+Key,キー
+Value,バリュー
+Encoder,エンコーダ
+Decoder,デコーダ
+Sequence Transduction,系列変換
+Multi-Head Attention,マルチヘッド・アテンション
+Scaled Dot-Product Attention,スケール化ドット積アテンション
+Positional Encoding,位置エンコーディング
+Residual Connection,残差接続
+Layer Normalization,層正規化 / レイヤー正規化
+Feed-Forward Network,フィードフォワード・ネットワーク / 順伝播型ネットワーク
+Auto-regressive,自己回帰
+Byte-Pair Encoding (BPE),バイト対符号化 / BPE
+Label Smoothing,ラベルスムージング / ラベル平滑化
+Beam Search,ビームサーチ
+Constituency Parsing,句構造解析
+Generalize,汎化する
+Converge,収束する
+Deploy,デプロイする / 実装する
+Propagate,伝播（でんぱ）させる
+English,Japanese
+Vector,ベクトル
+Matrix,行列
+Tensor,テンソル
+Scalar,スカラー
+Eigenvalue,固有値
+Eigenvector,固有ベクトル
+Derivative,導関数 / 微分
+Partial Derivative,偏微分
+Cross Entropy,交差エントロピー
+Regularization,正則化
+L1 Regularization,L1正則化
+L2 Regularization,L2正則化
+Curse of Dimensionality,次元の呪い
+Manifold Learning,多様体学習
+Saddle Point,鞍点
+Local Minimum,局所的最小値
+Global Minimum,大域的最小値
+Prior Distribution,事前分布
+Posterior Distribution,事後分布
+Likelihood,尤度
+Maximum Likelihood Estimation (MLE),最尤推定
+Maximum A Posteriori Estimation (MAP),最大事後確率推定
+Decision Tree,決定木
+Random Forest,ランダムフォレスト
+Support Vector Machine (SVM),サポートベクターマシン
+K-Means Clustering,K-meansクラスタリング / K平均法
+Principal Component Analysis (PCA),主成分分析
+Naive Bayes,ナイーブベイズ
+K-Nearest Neighbors (KNN),K近傍法
+Gradient Boosting,勾配ブースティング
+Ensemble Learning,アンサンブル学習
+Bagging,バギング
+Boosting,ブースティング
+Supervised Learning,教師あり学習
+Unsupervised Learning,教師なし学習
+Semi-supervised Learning,半教師あり学習
+Self-supervised Learning,自己教師あり学習
+Active Learning,能動学習 / アクティブラーニング
+Outlier Detection,外れ値検知
+Anomaly Detection,異常検知
+Time Series Analysis,時系列分析
+Recurrent Neural Network (RNN),再帰型ニューラルネットワーク
+Long Short-Term Memory (LSTM),長短期記憶
+Gated Recurrent Unit (GRU),ゲート付き回帰型ユニット
+Generative Adversarial Network (GAN),敵対的生成ネットワーク
+Autoencoder,オートエンコーダ / 自己符号化器
+Multilayer Perceptron (MLP),多層パーセプトロン
+Graph Neural Network (GNN),グラフニューラルネットワーク
+Spiking Neural Network (SNN),スパイキングニューラルネットワーク
+Sparse Neural Network,疎なニューラルネットワーク
+Dense Neural Network,密なニューラルネットワーク
+Dropout,ドロップアウト
+Activation Function,活性化関数
+Rectified Linear Unit (ReLU),正規化線形関数 / ReLU
+Sigmoid Function,シグモイド関数
+Softmax Function,ソフトマックス関数
+Batch Normalization,バッチ正規化
+Forward Pass,順伝播
+Backward Pass,逆伝播
+Backpropagation,誤差逆伝播法
+Backpropagation Through Time (BPTT),通時的誤差逆伝播法
+Optimizer,最適化アルゴリズム / オプティマイザ
+Stochastic Gradient Descent (SGD),確率的勾配降下法
+Learning Rate,学習率
+Learning Rate Decay,学習率の減衰
+Warmup,ウォームアップ
+Weight Decay,荷重減衰 / ウェイトディケイ
+Gradient Clipping,勾配クリッピング
+Hyperparameter,ハイパーパラメータ
+Grid Search,グリッドサーチ
+Random Search,ランダムサーチ
+Cross Validation,交差検証
+K-Fold Cross Validation,K分割交差検証
+Early Stopping,早期終了 / アーリーストッピング
+Transfer Learning,転移学習
+Zero-shot Learning,ゼロショット学習
+Few-shot Learning,フューショット学習
+Data Mining,データマイニング
+Data Pipeline,データパイプライン
+"Extract, Transform, Load (ETL)",ETL (抽出・変換・書き出し)
+Feature Engineering,特徴量エンジニアリング
+Feature Extraction,特徴抽出
+Feature Selection,特徴選択
+Dimensionality Reduction,次元削減
+Imputation,欠損値補完
+Normalization,正規化
+Standardization,標準化
+Min-Max Scaling,最小最大スケーリング
+One-Hot Encoding,ワンホットエンコーディング
+Label Encoding,ラベルエンコーディング
+Data Leakage,データリーク / データ漏洩
+Concept Drift,コンセプトドリフト
+Data Drift,データドリフト
+A/B Testing,A/Bテスト
+Baseline,ベースライン
+Ground Truth,グラウンドトゥルース / 正解データ
+Inductive Bias,帰納的バイアス
+Natural Language Processing (NLP),自然言語処理
+Natural Language Understanding (NLU),自然言語理解
+Natural Language Generation (NLG),自然言語生成
+Speech Recognition,音声認識
+Text-to-Speech (TTS),音声合成
+Machine Translation,機械翻訳
+Named Entity Recognition (NER),固有表現抽出
+Part-of-Speech Tagging,品詞タギング
+Sentiment Analysis,感情分析
+Topic Modeling,トピックモデリング
+Word Embedding,単語埋め込み
+Bag of Words (BoW),Bag of Words
+TF-IDF,TF-IDF
+N-gram,Nグラム
+Word2Vec,Word2Vec
+GloVe,GloVe
+FastText,FastText
+Continuous Bag of Words (CBOW),CBOW
+Skip-Gram,スキップグラム
+Negative Sampling,ネガティブサンプリング
+Subword,サブワード / 部分語
+Out-of-Vocabulary (OOV),語彙外
+SentencePiece,SentencePiece
+WordPiece,WordPiece
+Perplexity,パープレキシティ
+Bleu Score,BLEUスコア
+ROUGE Score,ROUGEスコア
+Prompt Engineering,プロンプトエンジニアリング
+Chain of Thought (CoT),思考の連鎖
+Retrieval-Augmented Generation (RAG),検索拡張生成
+Instruction Tuning,インストラクション・チューニング
+Reinforcement Learning from Human Feedback (RLHF),人間からのフィードバックを用いた強化学習
+Direct Preference Optimization (DPO),直接選好最適化
+Vector Database,ベクトルデータベース
+Semantic Search,セマンティック検索
+Foundation Model,基盤モデル
+Multimodal AI,マルチモーダルAI
+Vision-Language Model (VLM),視覚言語モデル
+Mixture of Experts (MoE),専門家混合モデル
+Context Window,コンテキストウィンドウ
+Temperature,温度パラメータ
+Top-k Sampling,Top-kサンプリング
+Top-p Sampling (Nucleus Sampling),Top-pサンプリング
+Repetition Penalty,繰り返しペナルティ
+Stop Sequence,ストップシーケンス / 停止文字列
+System Prompt,システムプロンプト
+Prompt Injection,プロンプトインジェクション
+Jailbreak,ジェイルブレイク
+Red Teaming,レッドチーム演習
+Pre-training,事前学習
+Post-training,事後学習
+Supervised Fine-Tuning (SFT),教師ありファインチューニング
+Parameter-Efficient Fine-Tuning (PEFT),パラメータ効率化ファインチューニング
+Low-Rank Adaptation (LoRA),LoRA
+Quantized LoRA (QLoRA),QLoRA
+Prompt Tuning,プロンプトチューニング
+Prefix Tuning,プレフィックスチューニング
+Emergent Ability,創発的能力
+Scaling Law,スケーリング則
+Optical Character Recognition (OCR),光学文字認識
+Image Generation,画像生成
+Super Resolution,超解像
+Style Transfer,画風変換 / スタイルトランスファー
+Non-Maximum Suppression (NMS),非最大値抑制
+Anchor Box,アンカーボックス
+Receptive Field,受容野
+Upsampling,アップサンプリング
+Downsampling,ダウンサンプリング
+Latent Space,潜在空間
+Diffusion Model,拡散モデル
+Contrastive Language-Image Pre-training (CLIP),CLIP
+Q-Learning,Q学習
+Markov Decision Process (MDP),マルコフ決定過程
+Actor-Critic,アクター・クリティック
+Deep Q-Network (DQN),深層Qネットワーク
+Replay Buffer,リプレイバッファ
+Target Network,ターゲットネットワーク
+Discount Factor,割引率
+Markov Property,マルコフ性
+Bellman Equation,ベルマン方程式
+Value Iteration,価値反復法
+Policy Iteration,方策反復法
+Monte Carlo Method,モンテカルロ法
+Temporal Difference Learning (TD Learning),TD学習 / 時間的差分学習
+Multi-Armed Bandit,多腕バンディット問題
+Inference,推論
+Latency,レイテンシ / 遅延
+Throughput,スループット
+Hardware Accelerator,ハードウェアアクセラレータ
+Graphics Processing Unit (GPU),画像処理装置 / GPU
+Tensor Processing Unit (TPU),テンソル処理装置 / TPU
+FLOPS,フロップス / 浮動小数点演算性能
+Quantization,量子化
+Pruning,プルーニング / 枝刈り
+Knowledge Distillation,知識蒸留
+Model Compression,モデル圧縮
+Federated Learning,連合学習 / フェデレーテッド・ラーニング
+Edge AI,エッジAI
+On-Device AI,オンデバイスAI
+Heuristic,ヒューリスティック
+Genetic Algorithm (GA),遺伝的アルゴリズム
+Knowledge Graph,ナレッジグラフ
+Expert System,エキスパートシステム
+Turing Test,チューリングテスト
+Artificial General Intelligence (AGI),汎用人工知能
+Artificial Superintelligence (ASI),人工超知能
+Singularity,シンギュラリティ / 技術的特異点
+Alignment,アライメント (価値観の整合)
+Explainable AI (XAI),説明可能なAI
+Fairness,公平性
+Adversarial Attack,敵対的攻撃
+Data Poisoning,データポイズニング
+English,Japanese
+Transformer,トランスフォーマー
+Attention Mechanism,アテンション機構 / 注意機構
+Self-Attention,自己アテンション / セルフアテンション
+Multi-Head Attention,マルチヘッド・アテンション
+Scaled Dot-Product Attention,スケール化ドット積アテンション
+Masked Multi-Head Attention,マスク化マルチヘッド・アテンション
+Cross-Attention,クロスアテンション / 交差アテンション
+Encoder-Decoder Attention,エンコーダ・デコーダ・アテンション
+Sparse Attention,スパース・アテンション
+Sliding Window Attention,スライディングウィンドウ・アテンション
+FlashAttention,FlashAttention
+Query (Q),クエリ
+Key (K),キー
+Value (V),バリュー
+Attention Score,アテンション・スコア
+Attention Weight,アテンションの重み
+Attention Matrix,アテンション行列
+Dot Product,ドット積 / 内積
+Scaling Factor,スケーリング係数
+Encoder,エンコーダ
+Decoder,デコーダ
+Encoder Block,エンコーダ・ブロック
+Decoder Block,デコーダ・ブロック
+Positional Encoding,位置エンコーディング
+Position Embedding,位置埋め込み
+Absolute Positional Encoding,絶対位置エンコーディング
+Relative Positional Encoding,相対位置エンコーディング
+Rotary Position Embedding (RoPE),RoPE / 回転位置埋め込み
+Residual Connection,残差接続
+Skip Connection,スキップ接続
+Layer Normalization (LayerNorm),層正規化 / レイヤー正規化
+RMSNorm,RMSNorm
+Position-wise Feed-Forward Network (FFN),位置単位フィードフォワード・ネットワーク
+Linear Projection,線形射影
+Masking,マスキング
+Causal Mask,因果マスク / 自己回帰マスク
+Padding Mask,パディング・マスク
+Look-Ahead Mask,先読みマスク
+Model Dimension (d_model),モデルの次元数
+Hidden Dimension,隠れ層の次元数
+Number of Heads,ヘッド数
+Number of Layers,レイヤー数 / 階層数
+Sequence Length,系列長
+Context Length,コンテキスト長
+Vision Transformer (ViT),ビジョン・トランスフォーマー
+Bidirectional Encoder Representations from Transformers (BERT),BERT
+Generative Pre-trained Transformer (GPT),GPT
+Sequence-to-Sequence (Seq2Seq),系列変換モデル / Seq2Seq
+Autoregressive Generation,自己回帰生成
+

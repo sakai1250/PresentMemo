@@ -1,0 +1,179 @@
+/* App */
+"app.name" = "PresentMemo";
+
+/* Tabs */
+"tab.home" = "Home";
+"tab.decks" = "Decks";
+"tab.settings" = "Settings";
+
+/* Home */
+"home.welcome" = "Welcome to PresentMemo";
+"home.subtitle" = "Master your presentations with smart flashcards";
+"home.recent" = "Recent Decks";
+"home.new_deck" = "Create New Deck";
+"home.empty" = "No decks yet.\nCreate one to get started!";
+"home.stats_chart_title" = "Mastery Breakdown";
+"home.stats_chart_x" = "Level";
+"home.stats_chart_y" = "Cards";
+
+/* Modes */
+"mode.default" = "Default Mode";
+"mode.default.desc" = "Pre-loaded academic vocabulary (SOTA, ablation, etc.)";
+"mode.pdf" = "PDF Analysis Mode";
+"mode.pdf.desc" = "AI extracts key terms from your PDF papers";
+"mode.pptx" = "PowerPoint Mode";
+"mode.pptx.desc" = "Import slide PDF for rehearsal (PowerPoint as PDF)";
+
+/* Stats */
+"stats.decks" = "Decks";
+"stats.cards" = "Cards";
+"stats.mastered" = "Mastered";
+
+/* Deck */
+"deck.default.name" = "Academic Vocabulary";
+"deck.cards_count" = "%d cards";
+"deck.create" = "Create Deck";
+"deck.new_name" = "New Deck";
+"deck.study" = "Study";
+"deck.quiz" = "Quiz";
+"deck.rehearsal" = "Rehearsal";
+"deck.add_card" = "Add Card";
+"deck.edit_card" = "Edit Card";
+"deck.delete_card" = "Delete Card";
+"deck.delete_card_confirm" = "Delete this card?";
+"deck.empty_cards" = "No cards yet. Add one to start studying.";
+
+/* Study */
+"study.tap_flip" = "Tap to flip";
+"study.know" = "Got it!";
+"study.dontknow" = "Not yet";
+"study.complete" = "Session Complete!";
+"study.restart" = "Study Again";
+
+/* Quiz */
+"quiz.title" = "Quiz";
+"quiz.question" = "Question %d of %d";
+"quiz.correct" = "Correct!";
+"quiz.wrong" = "Incorrect";
+"quiz.next" = "Next";
+"quiz.complete" = "Quiz Complete!";
+"quiz.score" = "Score: %d / %d";
+"quiz.restart" = "Try Again";
+
+/* Rehearsal */
+"rehearsal.title" = "Slide Rehearsal";
+"rehearsal.start" = "Start";
+"rehearsal.pause" = "Pause";
+"rehearsal.resume" = "Resume";
+"rehearsal.next" = "Next Slide";
+"rehearsal.slide_delay" = "Hide Duration";
+"rehearsal.keyword_delay" = "Keyword Duration";
+"rehearsal.phase.slide" = "Recall the script...";
+"rehearsal.phase.keywords" = "Key words:";
+"rehearsal.phase.full" = "Full script:";
+"rehearsal.complete" = "Rehearsal Complete!";
+"rehearsal.no_slides" = "No slides in this deck";
+"rehearsal.seconds" = "%.0f sec";
+"rehearsal.edit_notes" = "Edit Script";
+"deck.slide_notes" = "Slide Scripts";
+"deck.slide_notes_empty" = "(empty)";
+
+/* Scoring */
+"scoring.button" = "Score";
+"scoring.analyzing" = "Scoring...";
+"scoring.progress" = "Analyzing %d / %d slides";
+"scoring.complete" = "Scoring Complete!";
+"scoring.result_title" = "Score Results";
+"scoring.average" = "Overall Score: %d";
+"scoring.slides_scored" = "%d slides scored";
+"scoring.per_slide" = "Per-Slide Scores";
+"scoring.slide_number" = "Slide %d";
+"scoring.no_scorable_slides" = "No scorable slides (need both image and notes)";
+"scoring.tier.excellent" = "Excellent";
+"scoring.tier.good" = "Good";
+"scoring.tier.fair" = "Fair";
+"scoring.tier.poor" = "Needs Work";
+
+/* PDF */
+"pdf.import_title" = "Import PDF";
+"pdf.select" = "Select PDF";
+"pdf.analyzing" = "Analyzing PDF...";
+"pdf.results" = "Found Terms";
+"pdf.import_selected" = "Import Selected";
+"pdf.no_results" = "No terms found";
+"pdf.select_prompt" = "Tap to select a PDF file";
+"pdf.slide_import_title" = "Import Slide PDF";
+"pdf.slide_select_prompt" = "Select a slide PDF (exported from PowerPoint)";
+"pdf.create_rehearsal_deck" = "Create Rehearsal Deck";
+"pdf.step.extracting_text" = "Extracting text...";
+"pdf.step.rendering_images" = "Rendering slide images...";
+"pdf.step.extracting_keywords" = "Extracting keywords...";
+"pdf.step.ai_analysis" = "AI analysis in progress...";
+"pdf.step.finalizing" = "Finalizing...";
+
+/* PPTX */
+"pptx.import_title" = "Import PowerPoint";
+"pptx.select" = "Select .pptx File";
+"pptx.importing" = "Importing...";
+"pptx.slides_found" = "%d slides found";
+"pptx.select_prompt" = "Tap to select a PowerPoint (.pptx) file";
+"pptx.low_text_hint" = "This PPTX seems to contain very little selectable text. Exporting to PDF and using OCR often works better.";
+"pptx.open_pdf_ocr" = "Open PDF OCR Import";
+
+/* Mastery */
+"mastery.new" = "New";
+"mastery.learning" = "Learning";
+"mastery.reviewing" = "Reviewing";
+"mastery.mastered" = "Mastered";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.notifications" = "Notifications";
+"settings.notification_interval" = "Reminder Interval";
+"settings.about" = "About";
+"settings.version" = "Version";
+"settings.clear_data" = "Clear All Data";
+"settings.clear_confirm" = "Delete all decks and progress?";
+"settings.cancel" = "Cancel";
+"settings.confirm" = "Delete All";
+"settings.hours" = "Every %d hours";
+"settings.disabled" = "Disabled";
+"settings.ai" = "AI Extraction";
+"settings.ai_enabled" = "Enable AI enhancement";
+"settings.ai_hint" = "On-device AI extraction (Foundation Models) is used when available. No external API key is required.";
+"settings.glossary" = "Glossary";
+
+/* Glossary */
+"glossary.title" = "Glossary";
+"glossary.add" = "Add Term";
+"glossary.edit" = "Edit Term";
+"glossary.english" = "English";
+"glossary.japanese" = "Japanese";
+"glossary.count" = "%d terms";
+"glossary.empty" = "No terms yet. Add one to get started.";
+"glossary.import" = "Import CSV";
+"glossary.export" = "Export CSV";
+"glossary.imported" = "%d terms imported";
+
+/* CSV */
+"csv.import" = "Import CSV";
+"csv.export" = "Export CSV";
+"csv.imported_cards" = "%d cards imported";
+"csv.no_data" = "No importable data found";
+
+/* Notifications */
+"notification.title" = "Time to Study! 📚";
+"notification.body" = "Review your deck: %@";
+
+/* General */
+"button.done" = "Done";
+"button.cancel" = "Cancel";
+"button.save" = "Save";
+"button.delete" = "Delete";
+"button.add" = "Add";
+"button.close" = "Close";
+"label.term" = "Term";
+"label.definition" = "Definition";
+"label.example" = "Example";
+"create.deck.title" = "New Deck";
+"create.deck.name" = "Deck Name";

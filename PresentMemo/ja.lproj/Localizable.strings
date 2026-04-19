@@ -1,0 +1,179 @@
+/* App */
+"app.name" = "PresentMemo";
+
+/* Tabs */
+"tab.home" = "ホーム";
+"tab.decks" = "デッキ";
+"tab.settings" = "設定";
+
+/* Home */
+"home.welcome" = "PresentMemoへようこそ";
+"home.subtitle" = "スマートなフラッシュカードでプレゼンを極める";
+"home.recent" = "最近のデッキ";
+"home.new_deck" = "新しいデッキを作成";
+"home.empty" = "デッキがありません。\n作成してスタートしましょう！";
+"home.stats_chart_title" = "習熟度の内訳";
+"home.stats_chart_x" = "レベル";
+"home.stats_chart_y" = "カード数";
+
+/* Modes */
+"mode.default" = "デフォルトモード";
+"mode.default.desc" = "学会頻出語彙（SOTA、ablationなど）を収録";
+"mode.pdf" = "論文解析モード";
+"mode.pdf.desc" = "PDFから重要語句をAIが自動抽出";
+"mode.pptx" = "パワポ連携モード";
+"mode.pptx.desc" = "リハーサル用にスライドPDFを取り込み（PowerPointはPDF化して入力）";
+
+/* Stats */
+"stats.decks" = "デッキ";
+"stats.cards" = "カード";
+"stats.mastered" = "習得済み";
+
+/* Deck */
+"deck.default.name" = "学術用語集";
+"deck.cards_count" = "%d枚";
+"deck.create" = "デッキ作成";
+"deck.new_name" = "新しいデッキ";
+"deck.study" = "学習";
+"deck.quiz" = "クイズ";
+"deck.rehearsal" = "リハーサル";
+"deck.add_card" = "カード追加";
+"deck.edit_card" = "カード編集";
+"deck.delete_card" = "カード削除";
+"deck.delete_card_confirm" = "このカードを削除しますか？";
+"deck.empty_cards" = "カードがありません。追加して学習を始めましょう。";
+
+/* Study */
+"study.tap_flip" = "タップして裏を見る";
+"study.know" = "覚えた！";
+"study.dontknow" = "まだ";
+"study.complete" = "学習完了！";
+"study.restart" = "もう一度";
+
+/* Quiz */
+"quiz.title" = "クイズ";
+"quiz.question" = "第%d問 / 全%d問";
+"quiz.correct" = "正解！";
+"quiz.wrong" = "不正解";
+"quiz.next" = "次へ";
+"quiz.complete" = "クイズ終了！";
+"quiz.score" = "スコア: %d / %d";
+"quiz.restart" = "もう一度";
+
+/* Rehearsal */
+"rehearsal.title" = "スライドリハーサル";
+"rehearsal.start" = "開始";
+"rehearsal.pause" = "一時停止";
+"rehearsal.resume" = "再開";
+"rehearsal.next" = "次のスライド";
+"rehearsal.slide_delay" = "スライド隠し時間";
+"rehearsal.keyword_delay" = "キーワード表示時間";
+"rehearsal.phase.slide" = "セリフを思い出してみよう...";
+"rehearsal.phase.keywords" = "キーワード：";
+"rehearsal.phase.full" = "全文：";
+"rehearsal.complete" = "リハーサル完了！";
+"rehearsal.no_slides" = "このデッキにスライドがありません";
+"rehearsal.seconds" = "%.0f秒";
+"rehearsal.edit_notes" = "セリフ編集";
+"deck.slide_notes" = "セリフ一覧";
+"deck.slide_notes_empty" = "（未入力）";
+
+/* Scoring */
+"scoring.button" = "採点";
+"scoring.analyzing" = "採点中...";
+"scoring.progress" = "%d / %d スライドを解析中";
+"scoring.complete" = "採点完了！";
+"scoring.result_title" = "採点結果";
+"scoring.average" = "総合スコア: %d点";
+"scoring.slides_scored" = "%dスライドを採点";
+"scoring.per_slide" = "スライド別スコア";
+"scoring.slide_number" = "スライド %d";
+"scoring.no_scorable_slides" = "採点可能なスライドがありません（画像とノートが両方必要です）";
+"scoring.tier.excellent" = "優秀";
+"scoring.tier.good" = "良好";
+"scoring.tier.fair" = "普通";
+"scoring.tier.poor" = "要改善";
+
+/* PDF */
+"pdf.import_title" = "PDF取り込み";
+"pdf.select" = "PDFを選択";
+"pdf.analyzing" = "PDF解析中...";
+"pdf.results" = "抽出された語句";
+"pdf.import_selected" = "選択した語句を取り込む";
+"pdf.no_results" = "語句が見つかりませんでした";
+"pdf.select_prompt" = "タップしてPDFファイルを選択してください";
+"pdf.slide_import_title" = "スライドPDF取り込み";
+"pdf.slide_select_prompt" = "PowerPointから書き出したスライドPDFを選択してください";
+"pdf.create_rehearsal_deck" = "リハーサル用デッキを作成";
+"pdf.step.extracting_text" = "テキストを抽出中...";
+"pdf.step.rendering_images" = "スライド画像を生成中...";
+"pdf.step.extracting_keywords" = "キーワードを抽出中...";
+"pdf.step.ai_analysis" = "AIで解析中...";
+"pdf.step.finalizing" = "仕上げ処理中...";
+
+/* PPTX */
+"pptx.import_title" = "PowerPoint取り込み";
+"pptx.select" = "PPTXを選択";
+"pptx.importing" = "取り込み中...";
+"pptx.slides_found" = "%dスライドを検出";
+"pptx.select_prompt" = "タップしてPowerPointファイルを選択してください";
+"pptx.low_text_hint" = "このPPTXは選択可能なテキストが少ない可能性があります。PDFに書き出してOCR取り込みすると改善することがあります。";
+"pptx.open_pdf_ocr" = "PDF OCR取り込みを開く";
+
+/* Mastery */
+"mastery.new" = "未学習";
+"mastery.learning" = "学習中";
+"mastery.reviewing" = "復習中";
+"mastery.mastered" = "習得済み";
+
+/* Settings */
+"settings.title" = "設定";
+"settings.notifications" = "通知";
+"settings.notification_interval" = "リマインダー間隔";
+"settings.about" = "このアプリについて";
+"settings.version" = "バージョン";
+"settings.clear_data" = "全データを削除";
+"settings.clear_confirm" = "本当に削除しますか？すべてのデッキと進捗が消去されます。";
+"settings.cancel" = "キャンセル";
+"settings.confirm" = "削除する";
+"settings.hours" = "%d時間ごと";
+"settings.disabled" = "無効";
+"settings.ai" = "AI抽出";
+"settings.ai_enabled" = "AI補強を有効化";
+"settings.ai_hint" = "端末内AI抽出（Foundation Models）を使用します。外部APIキーは不要です。";
+"settings.glossary" = "専門用語辞書";
+
+/* Glossary */
+"glossary.title" = "専門用語辞書";
+"glossary.add" = "用語を追加";
+"glossary.edit" = "用語を編集";
+"glossary.english" = "英語";
+"glossary.japanese" = "日本語";
+"glossary.count" = "%d件の用語";
+"glossary.empty" = "用語がありません。追加してください。";
+"glossary.import" = "CSVインポート";
+"glossary.export" = "CSVエクスポート";
+"glossary.imported" = "%d件インポートしました";
+
+/* CSV */
+"csv.import" = "CSVインポート";
+"csv.export" = "CSVエクスポート";
+"csv.imported_cards" = "%d枚のカードをインポートしました";
+"csv.no_data" = "インポート可能なデータがありません";
+
+/* Notifications */
+"notification.title" = "学習の時間です！📚";
+"notification.body" = "デッキを復習しましょう：%@";
+
+/* General */
+"button.done" = "完了";
+"button.cancel" = "キャンセル";
+"button.save" = "保存";
+"button.delete" = "削除";
+"button.add" = "追加";
+"button.close" = "閉じる";
+"label.term" = "用語";
+"label.definition" = "定義";
+"label.example" = "例文";
+"create.deck.title" = "新しいデッキ";
+"create.deck.name" = "デッキ名";
