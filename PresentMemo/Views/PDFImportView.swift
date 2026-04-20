@@ -213,6 +213,12 @@ struct PDFImportView: View {
             analysisProgress = 0
             analysisStatus = L("pdf.analyzing")
             Task {
+                let startedAccess = url.startAccessingSecurityScopedResource()
+                defer {
+                    if startedAccess {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+                }
                 print("==== ⏱️ [開始] PDF読み込み解析 ====")
                 let totalStartTime = CFAbsoluteTimeGetCurrent()
                 
