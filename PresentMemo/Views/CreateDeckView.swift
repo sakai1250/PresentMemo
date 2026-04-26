@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 struct CreateDeckView: View {
     @EnvironmentObject var deckVM: DeckViewModel
+    @EnvironmentObject var coachMark: CoachMarkManager
     @Environment(\.dismiss) private var dismiss
 
     @State private var selectedMode: AppMode = .default
@@ -33,6 +34,7 @@ struct CreateDeckView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(L("button.save")) { create() }
                         .bold()
+                        .coachMarkTarget(.tapSave)
                 }
             }
             .sheet(isPresented: $showPDF) {
@@ -58,6 +60,7 @@ struct CreateDeckView: View {
                 Button(L("button.close"), role: .cancel) { }
             }
         }
+        .coachMarkOverlay(for: [.selectManual, .tapSave])
     }
 
     private func create() {
@@ -133,7 +136,17 @@ struct CreateDeckView: View {
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture { selectedMode = mode }
+        .onTapGesture {
+            selectedMode = mode
+            if mode == .manualInput {
+                coachMark.advance(from: .selectManual)
+            }
+        }
+        .transformAnchorPreference(key: CoachTargetKey.self, value: .bounds) { dict, anchor in
+            if mode == .manualInput {
+                dict[.selectManual] = anchor
+            }
+        }
     }
 
     func modeColor(_ m: AppMode) -> Color {

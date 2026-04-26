@@ -3,6 +3,7 @@ import Charts
 
 struct HomeView: View {
     @EnvironmentObject var deckVM: DeckViewModel
+    @EnvironmentObject var coachMark: CoachMarkManager
     @State private var showCreate = false
 
     var body: some View {
@@ -62,7 +63,14 @@ struct HomeView: View {
                             ForEach(deckVM.decks.prefix(3)) { deck in
                                 NavigationLink { DeckDetailView(deck: deck) } label: {
                                     DeckRowCard(deck: deck)
-                                }.buttonStyle(.plain).padding(.horizontal)
+                                }
+                                .buttonStyle(.plain)
+                                .padding(.horizontal)
+                                .transformAnchorPreference(key: CoachTargetKey.self, value: .bounds) { dict, anchor in
+                                    if deck.id == deckVM.decks.first?.id {
+                                        dict[.tapDeck] = anchor
+                                    }
+                                }
                             }
                         }
                     }
@@ -75,7 +83,6 @@ struct HomeView: View {
                                 .padding(.horizontal)
                         }
                     }
-                    .coachMarkTarget(.createDeck)
                 }
                 .padding(.vertical)
             }
@@ -85,9 +92,22 @@ struct HomeView: View {
                     Button { showCreate = true } label: {
                         Image(systemName: "plus.circle.fill").font(.title3)
                     }
+                    .coachMarkTarget(.tapCreate)
                 }
             }
             .sheet(isPresented: $showCreate) { CreateDeckView() }
+            .onChange(of: showCreate) { _, isShowing in
+                if isShowing {
+                    coachMark.advance(from: .tapCreate)
+                }
+            }
+            .onChange(of: deckVM.decks.count) { oldCount, newCount in
+                if newCount > oldCount {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        coachMark.advance(from: .tapSave)
+                    }
+                }
+            }
         }
     }
 

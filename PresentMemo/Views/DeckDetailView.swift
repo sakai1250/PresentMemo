@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 struct DeckDetailView: View {
     @EnvironmentObject var deckVM: DeckViewModel
+    @EnvironmentObject var coachMark: CoachMarkManager
     let deck: Deck
 
     @State private var editorMode: CardEditorMode?
@@ -127,6 +128,7 @@ struct DeckDetailView: View {
                 } label: {
                     Label(L("deck.add_card"), systemImage: "plus")
                 }
+                .coachMarkTarget(.addCard)
             }
         }
         .sheet(item: $editorMode) { mode in
@@ -139,6 +141,9 @@ struct DeckDetailView: View {
                         example: example
                     )
                     deckVM.addCard(newCard, toDeck: currentDeck.id)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        coachMark.advance(from: .fillCard)
+                    }
                 case .edit(let card):
                     var updated = card
                     updated.term = term
@@ -193,6 +198,14 @@ struct DeckDetailView: View {
         .alert(cardImportMessage ?? "", isPresented: $showCardImportAlert) {
             Button(L("button.close"), role: .cancel) { }
         }
+        .onAppear {
+            coachMark.advance(from: .tapDeck)
+        }
+        .onChange(of: editorMode?.id) { _, newID in
+            if newID == "create" {
+                coachMark.advance(from: .addCard)
+            }
+        }
     }
 
     private func handleCardCSVImport(_ result: Result<[URL], Error>) {
@@ -237,6 +250,7 @@ private enum CardEditorMode: Identifiable {
 
 private struct CardEditorSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var coachMark: CoachMarkManager
     let mode: CardEditorMode
     let onSave: (String, String, String) -> Void
 
@@ -266,12 +280,25 @@ private struct CardEditorSheet: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                TextField(L("label.term"), text: $term)
-                TextField(L("label.definition"), text: $definition, axis: .vertical)
-                    .lineLimit(3...6)
-                TextField(L("label.example"), text: $example, axis: .vertical)
-                    .lineLimit(2...4)
+            VStack(spacing: 0) {
+                if coachMark.currentStep == .fillCard {
+                    HStack(spacing: 8) {
+                        Image(systemName: "lightbulb.fill")
+                            .foregroundStyle(.yellow)
+                        Text(CoachMarkStep.fillCard.message)
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color.accentColor.opacity(0.12))
+                }
+                Form {
+                    TextField(L("label.term"), text: $term)
+                    TextField(L("label.definition"), text: $definition, axis: .vertical)
+                        .lineLimit(3...6)
+                    TextField(L("label.example"), text: $example, axis: .vertical)
+                        .lineLimit(2...4)
+                }
             }
             .navigationTitle(mode.title)
             .toolbar {

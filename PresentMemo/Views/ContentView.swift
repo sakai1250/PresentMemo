@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var deckVM: DeckViewModel
-    @StateObject private var coachMark = CoachMarkManager()
+    @EnvironmentObject var coachMark: CoachMarkManager
     @State private var selectedTab = 0
 
     var body: some View {
@@ -17,15 +17,7 @@ struct ContentView: View {
                 .tabItem { Label(L("tab.settings"), systemImage: "gearshape.fill") }
                 .tag(2)
         }
-        .environmentObject(coachMark)
-        .onPreferenceChange(CoachMarkFrameKey.self) { frames in
-            for (step, frame) in frames {
-                coachMark.targetFrames[step] = frame
-            }
-        }
-        .overlay {
-            CoachMarkOverlay(manager: coachMark)
-        }
+        .coachMarkOverlay(for: [.tapCreate, .tapDeck, .addCard, .done])
         .onAppear {
             coachMark.startIfNeeded()
         }

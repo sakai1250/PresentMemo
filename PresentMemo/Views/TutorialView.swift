@@ -1,37 +1,52 @@
 import SwiftUI
 
+// MARK: - Steps
+
 enum CoachMarkStep: Int, CaseIterable, Hashable {
-    case welcome
-    case createDeck
+    case tapCreate
+    case selectManual
+    case tapSave
+    case tapDeck
+    case addCard
+    case fillCard
     case done
 
     var title: String {
         switch self {
-        case .welcome: return L("coach.welcome.title")
-        case .createDeck: return L("coach.create.title")
+        case .tapCreate: return L("coach.tap_create.title")
+        case .selectManual: return L("coach.select_manual.title")
+        case .tapSave: return L("coach.tap_save.title")
+        case .tapDeck: return L("coach.tap_deck.title")
+        case .addCard: return L("coach.add_card.title")
+        case .fillCard: return L("coach.fill_card.title")
         case .done: return L("coach.done.title")
         }
     }
 
     var message: String {
         switch self {
-        case .welcome: return L("coach.welcome.body")
-        case .createDeck: return L("coach.create.body")
+        case .tapCreate: return L("coach.tap_create.body")
+        case .selectManual: return L("coach.select_manual.body")
+        case .tapSave: return L("coach.tap_save.body")
+        case .tapDeck: return L("coach.tap_deck.body")
+        case .addCard: return L("coach.add_card.body")
+        case .fillCard: return L("coach.fill_card.body")
         case .done: return L("coach.done.body")
         }
     }
 
-    var hasTarget: Bool {
+    var isInteractive: Bool {
         switch self {
-        case .createDeck: return true
-        default: return false
+        case .done: return false
+        default: return true
         }
     }
 }
 
+// MARK: - Manager
+
 final class CoachMarkManager: ObservableObject {
     @Published var currentStep: CoachMarkStep?
-    @Published var targetFrames: [CoachMarkStep: CGRect] = [:]
     @Published var requestedTab: Int?
 
     var isActive: Bool { currentStep != nil }
@@ -40,14 +55,14 @@ final class CoachMarkManager: ObservableObject {
         guard !UserDefaults.standard.bool(forKey: "tutorial.completed") else { return }
         requestedTab = 0
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            withAnimation { self.currentStep = .welcome }
+            withAnimation { self.currentStep = .tapCreate }
         }
     }
 
     func restart() {
         requestedTab = 0
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            withAnimation { self.currentStep = .welcome }
+            withAnimation { self.currentStep = .tapCreate }
         }
     }
 
@@ -62,6 +77,11 @@ final class CoachMarkManager: ObservableObject {
         }
     }
 
+    func advance(from step: CoachMarkStep) {
+        guard currentStep == step else { return }
+        next()
+    }
+
     func finish() {
         withAnimation { currentStep = nil }
         requestedTab = nil
@@ -69,88 +89,98 @@ final class CoachMarkManager: ObservableObject {
     }
 }
 
-// MARK: - Frame reporting
+// MARK: - Anchor Preference
 
-struct CoachMarkFrameKey: PreferenceKey {
-    static var defaultValue: [CoachMarkStep: CGRect] = [:]
-    static func reduce(value: inout [CoachMarkStep: CGRect], nextValue: () -> [CoachMarkStep: CGRect]) {
+struct CoachTargetKey: PreferenceKey {
+    static var defaultValue: [CoachMarkStep: Anchor<CGRect>] = [:]
+    static func reduce(value: inout [CoachMarkStep: Anchor<CGRect>],
+                       nextValue: () -> [CoachMarkStep: Anchor<CGRect>]) {
         value.merge(nextValue()) { $1 }
     }
 }
 
 extension View {
     func coachMarkTarget(_ step: CoachMarkStep) -> some View {
-        self.background(
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: CoachMarkFrameKey.self,
-                               value: [step: proxy.frame(in: .global)])
-            }
-        )
+        self.anchorPreference(key: CoachTargetKey.self, value: .bounds) { [step: $0] }
+    }
+
+    func coachMarkOverlay(for steps: Set<CoachMarkStep>) -> some View {
+        self.overlayPreferenceValue(CoachTargetKey.self) { targets in
+            CoachMarkOverlayView(targets: targets, activeSteps: steps)
+        }
     }
 }
 
 // MARK: - Overlay
 
-struct CoachMarkOverlay: View {
-    @ObservedObject var manager: CoachMarkManager
+struct CoachMarkOverlayView: View {
+    @EnvironmentObject var manager: CoachMarkManager
+    let targets: [CoachMarkStep: Anchor<CGRect>]
+    let activeSteps: Set<CoachMarkStep>
 
     var body: some View {
-        if let step = manager.currentStep {
-            GeometryReader { proxy in
-                let overlayOrigin = proxy.frame(in: .global).origin
+        GeometryReader { proxy in
+            if let step = manager.currentStep, activeSteps.contains(step) {
+                let targetRect: CGRect? = targets[step].map { proxy[$0] }
 
                 ZStack {
-                    dimBackground(step: step, proxy: proxy, overlayOrigin: overlayOrigin)
-                    tooltipCard(step: step, proxy: proxy, overlayOrigin: overlayOrigin)
+                    if step.isInteractive {
+                        interactiveDim(targetRect: targetRect)
+                    } else {
+                        blockingDim(targetRect: targetRect)
+                    }
+
+                    tooltip(step: step, targetRect: targetRect, in: proxy)
                 }
             }
-            .ignoresSafeArea()
-            .transition(.opacity)
+        }
+        .ignoresSafeArea()
+    }
+
+    @ViewBuilder
+    private func interactiveDim(targetRect: CGRect?) -> some View {
+        if let rect = targetRect {
+            let padded = rect.insetBy(dx: -8, dy: -8)
+            CutoutShape(cutout: padded, cornerRadius: 14)
+                .fill(Color.black.opacity(0.55), style: FillStyle(eoFill: true))
+                .contentShape(CutoutShape(cutout: padded, cornerRadius: 14), eoFill: true)
+        } else {
+            Color.black.opacity(0.55)
+                .allowsHitTesting(false)
         }
     }
 
     @ViewBuilder
-    private func dimBackground(step: CoachMarkStep, proxy: GeometryProxy, overlayOrigin: CGPoint) -> some View {
-        Color.black.opacity(0.6)
+    private func blockingDim(targetRect: CGRect?) -> some View {
+        Color.black.opacity(0.55)
             .overlay {
-                if step.hasTarget, let frame = manager.targetFrames[step] {
-                    let localRect = frame.offsetBy(dx: -overlayOrigin.x, dy: -overlayOrigin.y)
+                if let rect = targetRect {
                     RoundedRectangle(cornerRadius: 14)
-                        .frame(width: localRect.width + 16, height: localRect.height + 16)
-                        .position(x: localRect.midX, y: localRect.midY)
+                        .frame(width: rect.width + 16, height: rect.height + 16)
+                        .position(x: rect.midX, y: rect.midY)
                         .blendMode(.destinationOut)
                 }
             }
             .compositingGroup()
     }
 
-    private func tooltipCard(step: CoachMarkStep, proxy: GeometryProxy, overlayOrigin: CGPoint) -> some View {
+    private func tooltip(step: CoachMarkStep, targetRect: CGRect?, in proxy: GeometryProxy) -> some View {
         let card = VStack(alignment: .leading, spacing: 10) {
-            Text(step.title)
-                .font(.headline)
-
-            Text(step.message)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+            Text(step.title).font(.headline)
+            Text(step.message).font(.subheadline).foregroundStyle(.secondary)
 
             HStack {
-                Button(L("coach.skip")) {
-                    manager.finish()
-                }
-                .foregroundStyle(.white.opacity(0.7))
-
+                Button(L("coach.skip")) { manager.finish() }
+                    .foregroundStyle(.white.opacity(0.7))
                 Spacer()
-
-                Button {
-                    manager.next()
-                } label: {
-                    Text(step == CoachMarkStep.allCases.last
-                         ? L("coach.start")
-                         : L("tutorial.next"))
-                        .bold()
+                if !step.isInteractive {
+                    Button {
+                        manager.next()
+                    } label: {
+                        Text(step == .done ? L("coach.start") : L("tutorial.next")).bold()
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
             }
             .padding(.top, 4)
         }
@@ -159,26 +189,39 @@ struct CoachMarkOverlay: View {
         .cornerRadius(16)
         .shadow(color: .black.opacity(0.2), radius: 12, y: 4)
         .padding(.horizontal, 24)
+        .allowsHitTesting(true)
 
-        let position = tooltipPosition(step: step, proxy: proxy, overlayOrigin: overlayOrigin)
-        return card.position(position)
+        let pos = tooltipPosition(targetRect: targetRect, in: proxy)
+        return card.position(pos)
     }
 
-    private func tooltipPosition(step: CoachMarkStep, proxy: GeometryProxy, overlayOrigin: CGPoint) -> CGPoint {
+    private func tooltipPosition(targetRect: CGRect?, in proxy: GeometryProxy) -> CGPoint {
         let center = CGPoint(x: proxy.size.width / 2, y: proxy.size.height / 2)
+        guard let rect = targetRect else { return center }
 
-        guard step.hasTarget, let frame = manager.targetFrames[step] else {
-            return center
-        }
-
-        let localRect = frame.offsetBy(dx: -overlayOrigin.x, dy: -overlayOrigin.y)
-        let cardHeight: CGFloat = 160
+        let cardHeight: CGFloat = 150
         let padding: CGFloat = 24
 
-        if localRect.midY < proxy.size.height / 2 {
-            return CGPoint(x: center.x, y: localRect.maxY + padding + cardHeight / 2)
+        if rect.midY < proxy.size.height / 2 {
+            return CGPoint(x: center.x, y: rect.maxY + padding + cardHeight / 2)
         } else {
-            return CGPoint(x: center.x, y: localRect.minY - padding - cardHeight / 2)
+            return CGPoint(x: center.x, y: rect.minY - padding - cardHeight / 2)
         }
+    }
+}
+
+// MARK: - Cutout Shape
+
+struct CutoutShape: Shape {
+    let cutout: CGRect
+    let cornerRadius: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path(rect)
+        path.addRoundedRect(
+            in: cutout,
+            cornerSize: CGSize(width: cornerRadius, height: cornerRadius)
+        )
+        return path
     }
 }

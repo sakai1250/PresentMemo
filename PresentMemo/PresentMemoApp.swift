@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct PresentMemoApp: App {
     @StateObject private var deckVM = DeckViewModel()
+    @StateObject private var coachMarkManager = CoachMarkManager()
 
     init() {
         NotificationManager.shared.requestPermission()
@@ -15,6 +16,7 @@ struct PresentMemoApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(deckVM)
+                .environmentObject(coachMarkManager)
         }
     }
 }
