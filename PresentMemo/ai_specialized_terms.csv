@@ -39,7 +39,7 @@ Environment,環境
 State,状態
 Reward,報酬
 Policy,方策 / ポリシー
-Attention Mechanism,アテンション機構 / 注意機構
+Attention Mechanism,アテンション機構
 Self-Attention,自己アテンション / セルフアテンション
 Query,クエリ
 Key,キー

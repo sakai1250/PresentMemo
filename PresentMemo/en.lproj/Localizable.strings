@@ -19,9 +19,13 @@
 /* Modes */
 "mode.default" = "Default Mode";
 "mode.default.desc" = "Pre-loaded academic vocabulary (SOTA, ablation, etc.)";
-"mode.pdf" = "PDF Analysis Mode";
-"mode.pdf.desc" = "AI extracts key terms from your PDF papers";
-"mode.pptx" = "PowerPoint Mode";
+"mode.manual" = "Manual Input Mode";
+"mode.manual.desc" = "Create an empty deck and type terms manually";
+"mode.csv" = "CSV Import Mode";
+"mode.csv.desc" = "Create a word deck from CSV";
+"mode.pdf" = "Paper Keyword Mode";
+"mode.pdf.desc" = "Extract proposal-method-focused key terms from PDFs";
+"mode.pptx" = "Slide Rehearsal Mode";
 "mode.pptx.desc" = "Import slide PDF for rehearsal (PowerPoint as PDF)";
 
 /* Stats */
@@ -31,12 +35,17 @@
 
 /* Deck */
 "deck.default.name" = "Academic Vocabulary";
+"deck.manual.name" = "Manual Input Deck";
+"deck.csv.name" = "CSV Word Deck";
+"deck.pdf.name" = "Paper Terms Deck";
+"deck.pptx.name" = "Presentation Slides Deck";
 "deck.cards_count" = "%d cards";
 "deck.create" = "Create Deck";
 "deck.new_name" = "New Deck";
 "deck.study" = "Study";
 "deck.quiz" = "Quiz";
 "deck.rehearsal" = "Rehearsal";
+"deck.listen" = "Listen";
 "deck.add_card" = "Add Card";
 "deck.edit_card" = "Edit Card";
 "deck.delete_card" = "Delete Card";
@@ -75,6 +84,36 @@
 "rehearsal.no_slides" = "No slides in this deck";
 "rehearsal.seconds" = "%.0f sec";
 "rehearsal.edit_notes" = "Edit Script";
+"listening.title" = "Listening Mode";
+"coach.welcome.title" = "Welcome to PresentMemo";
+"coach.welcome.body" = "A flashcard app for presentation vocabulary. Let us show you around.";
+"coach.create.title" = "Create a Deck";
+"coach.create.body" = "Choose a mode to create your first deck. Supports manual input, CSV, PDF, and slide import.";
+"coach.done.title" = "You're All Set!";
+"coach.done.body" = "Start by creating a deck. You can also set up reminders in Settings.";
+"coach.skip" = "Skip";
+"coach.start" = "Get Started";
+"tutorial.title" = "Quick Guide";
+"tutorial.done" = "Done";
+"tutorial.next" = "Next";
+"tutorial.guide.welcome" = "Welcome";
+"tutorial.guide.welcome.body" = "This is a guided tutorial. Follow the tap instructions.";
+"tutorial.guide.step1" = "Tap here first!";
+"tutorial.guide.step1.body" = "Tap 'Manual Input Mode' in the mode list below.";
+"tutorial.guide.step2" = "Now tap Save";
+"tutorial.guide.step2.body" = "With manual mode selected, tap 'Save'.";
+"tutorial.guide.step3" = "Reminder setup";
+"tutorial.guide.step3.body" = "In Settings, you can add multiple reminders with weekday, time, and comment.";
+"tutorial.guide.done" = "You're all set";
+"tutorial.guide.done.body" = "Create one manual deck first and add just 3 words to get started.";
+"tutorial.page1.title" = "1. Create a Deck";
+"tutorial.page1.body" = "Use + on Home or Decks to create decks from manual input, CSV, PDF, or slide import.";
+"tutorial.page2.title" = "2. Study and Quiz";
+"tutorial.page2.body" = "In Study, flip cards to check. In Quiz, correct/incorrect answers update mastery.";
+"tutorial.page3.title" = "3. Listening Mode";
+"tutorial.page3.body" = "Cards are read aloud sequentially. English text uses English voice, Japanese text uses Japanese voice.";
+"tutorial.page4.title" = "4. Review Notifications";
+"tutorial.page4.body" = "Notifications prioritize less-mastered words. You can change interval in Settings.";
 "deck.slide_notes" = "Slide Scripts";
 "deck.slide_notes_empty" = "(empty)";
 
@@ -142,6 +181,13 @@
 "settings.ai_enabled" = "Enable AI enhancement";
 "settings.ai_hint" = "On-device AI extraction (Foundation Models) is used when available. No external API key is required.";
 "settings.glossary" = "Glossary";
+"settings.open_tutorial" = "View Tutorial";
+"settings.reminder_empty" = "No reminders yet. Add one.";
+"settings.add_reminder" = "Add Reminder";
+"settings.reminder_weekday" = "Weekday";
+"settings.reminder_time" = "Time";
+"settings.reminder_comment" = "Comment";
+"settings.reminder_comment_placeholder" = "e.g. 15-min rehearsal";
 
 /* Glossary */
 "glossary.title" = "Glossary";
@@ -164,6 +210,8 @@
 /* Notifications */
 "notification.title" = "Time to Study! 📚";
 "notification.body" = "Review your deck: %@";
+"notification.word_body" = "Review \"%@\" from %@";
+"notification.fallback_body" = "Time to start today's study";
 
 /* General */
 "button.done" = "Done";

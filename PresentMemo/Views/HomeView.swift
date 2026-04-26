@@ -75,6 +75,7 @@ struct HomeView: View {
                                 .padding(.horizontal)
                         }
                     }
+                    .coachMarkTarget(.createDeck)
                 }
                 .padding(.vertical)
             }
@@ -135,6 +136,8 @@ struct ModeCard: View {
     var modeColor: Color {
         switch mode {
         case .default: return .blue
+        case .manualInput: return .teal
+        case .csvImport: return .indigo
         case .pdfAnalysis: return .red
         case .powerPoint: return .orange
         }
@@ -142,6 +145,8 @@ struct ModeCard: View {
     var desc: String {
         switch mode {
         case .default: return L("mode.default.desc")
+        case .manualInput: return L("mode.manual.desc")
+        case .csvImport: return L("mode.csv.desc")
         case .pdfAnalysis: return L("mode.pdf.desc")
         case .powerPoint: return L("mode.pptx.desc")
         }
@@ -192,6 +197,8 @@ struct DeckRowCard: View {
     var modeColor: Color {
         switch deck.mode {
         case .default: return .blue
+        case .manualInput: return .teal
+        case .csvImport: return .indigo
         case .pdfAnalysis: return .red
         case .powerPoint: return .orange
         }

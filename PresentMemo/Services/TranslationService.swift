@@ -113,6 +113,11 @@ actor TranslationService {
             return web
         }
 
+        if let composed = composeTranslationFromDictionaries(key, userDict: userDict, csvDict: dict) {
+            cache[key.lowercased()] = composed
+            return composed
+        }
+
         return nil
     }
 
@@ -128,8 +133,7 @@ actor TranslationService {
                 let session = TranslationSession(installedSource: source, target: target)
                 let response = try await session.translate(text)
                 let translated = response.targetText.trimmingCharacters(in: .whitespacesAndNewlines)
-                guard !translated.isEmpty else { return nil }
-                return translated
+                return cleanedTranslationCandidate(translated, original: text)
             } catch {
                 supportState = .unsupported
                 return nil
@@ -159,8 +163,7 @@ Text: \(text)
                 let translated = response.content
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .replacingOccurrences(of: "\"", with: "")
-                guard !translated.isEmpty else { return nil }
-                return translated
+                return cleanedTranslationCandidate(translated, original: text)
             } catch {
                 return nil
             }
@@ -187,8 +190,7 @@ Text: \(text)
             let decoded = try JSONDecoder().decode(MyMemoryResponse.self, from: data)
             let translated = decoded.responseData.translatedText
                 .trimmingCharacters(in: .whitespacesAndNewlines)
-            guard !translated.isEmpty else { return nil }
-            return translated
+            return cleanedTranslationCandidate(translated, original: text)
         } catch {
             return nil
         }
@@ -219,6 +221,53 @@ Text: \(text)
         }
     }
     #endif
+
+    private func cleanedTranslationCandidate(_ candidate: String, original: String) -> String? {
+        let cleaned = candidate
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "&#39;", with: "'")
+            .replacingOccurrences(of: "&quot;", with: "\"")
+        guard !cleaned.isEmpty else { return nil }
+
+        // Reject obvious non-translations (English copied back as-is).
+        if !containsJapanese(cleaned), cleaned.lowercased() == original.lowercased() {
+            return nil
+        }
+        return cleaned
+    }
+
+    private func composeTranslationFromDictionaries(
+        _ text: String,
+        userDict: [String: String],
+        csvDict: [String: String]
+    ) -> String? {
+        let separators = CharacterSet(charactersIn: " -_/()")
+        let tokens = text
+            .split(whereSeparator: { scalar in
+                scalar.unicodeScalars.allSatisfy { separators.contains($0) }
+            })
+            .map(String.init)
+            .filter { !$0.isEmpty }
+
+        guard tokens.count >= 2 else { return nil }
+
+        var mapped: [String] = []
+        var translatedCount = 0
+        for token in tokens {
+            let lower = token.lowercased()
+            if let hit = userDict[lower] ?? csvDict[lower] {
+                mapped.append(hit)
+                translatedCount += 1
+            } else if token.allSatisfy({ $0.isUppercase || $0.isNumber }) {
+                mapped.append(token)
+            } else {
+                mapped.append(token)
+            }
+        }
+
+        guard translatedCount > 0 else { return nil }
+        return mapped.joined(separator: "・")
+    }
 
     private func containsJapanese(_ text: String) -> Bool {
         for scalar in text.unicodeScalars {

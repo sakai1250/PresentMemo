@@ -40,6 +40,11 @@ struct DeckDetailView: View {
                     } label: {
                         ActionButton(title: L("deck.quiz"), icon: "questionmark.circle", color: .purple)
                     }
+                    NavigationLink {
+                        ListeningModeView(deck: currentDeck)
+                    } label: {
+                        ActionButton(title: L("deck.listen"), icon: "speaker.wave.2", color: .teal)
+                    }
                     if !currentDeck.slideNotes.isEmpty {
                         NavigationLink {
                             RehearsalView(deck: currentDeck)

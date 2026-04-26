@@ -17,10 +17,17 @@ struct SlideScore: Identifiable {
         }
     }
 
-    /// CLIP cosine similarity (typically 0.10–0.45) → 0–100
-    static func normalize(_ raw: Float, min: Float = 0.10, max: Float = 0.45) -> Int {
+    /// CLIP cosine similarity (often around -0.05–0.30) -> 0–100
+    static func normalize(_ raw: Float, min: Float = -0.05, max: Float = 0.30) -> Int {
         let clamped = Swift.min(Swift.max(raw, min), max)
-        return Int(((clamped - min) / (max - min)) * 100)
+        let linear = (clamped - min) / (max - min)
+        // Slightly ease lower scores upward so near-miss explanations are not all zero.
+        let curved = pow(Double(linear), 0.75)
+        var score = Int(curved * 100.0)
+        if raw > -0.08 {
+            score = Swift.max(score, 10)
+        }
+        return score
     }
 }
 

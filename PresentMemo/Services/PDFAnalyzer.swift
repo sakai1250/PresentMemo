@@ -23,10 +23,12 @@ class PDFAnalyzer {
 
     /// Returns (term, context, score) tuples sorted by importance + MLP reranking.
     func extractKeyTerms(from text: String, max: Int = 50) async -> [(term: String, context: String, score: Double)] {
-        let sourceText = text
+        let normalizedInput = text
             .replacingOccurrences(of: "\r\n", with: "\n")
             .replacingOccurrences(of: "\r", with: "\n")
+        let sourceText = TermExtractionTextFilter.preprocessForImportantTerms(normalizedInput, domain: .presentation)
         let normalizedText = sourceText.replacingOccurrences(of: "\n", with: " ")
+        guard !normalizedText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return [] }
         var freq: [String: Int] = [:]
 
         // 1) Named-entity / lexical tagger (Noun Chunks 抽出)
@@ -47,7 +49,8 @@ class PDFAnalyzer {
             let cleaned = self.sanitizePhrase(joinedTerm)
             // 複数単語なら有用なフレーズか、単語なら有用な単語か判定
             let isMulti = currentChunkTokens.count > 1
-            if (isMulti && self.isUsefulPhrase(cleaned)) || (!isMulti && self.isUsefulToken(cleaned)) {
+            if ((isMulti && self.isUsefulPhrase(cleaned)) || (!isMulti && self.isUsefulToken(cleaned))) &&
+                !TermExtractionTextFilter.isLikelyPersonOrPlace(cleaned) {
                 let weight = isMulti ? 3 : (cleaned.count > 4 ? 2 : 1) // 長い句や単語を優遇
                 freq[cleaned, default: 0] += weight
             }
@@ -64,7 +67,7 @@ class PDFAnalyzer {
                 return true
             }
             
-            if let t = tag, (t == .noun || t == .adjective || t == .organizationName || t == .personalName || t == .placeName) {
+            if let t = tag, (t == .noun || t == .adjective || t == .organizationName) {
                 if let lastEnd = lastEndIndex, lastEnd <= range.lowerBound {
                     let textBetween = normalizedText[lastEnd..<range.lowerBound]
                     if textBetween.trimmingCharacters(in: .whitespaces).isEmpty {
@@ -100,7 +103,9 @@ class PDFAnalyzer {
                     if let m = m {
                         let w = ns.substring(with: m.range)
                         let cleaned = sanitizePhrase(w)
-                        if isUsefulPhrase(cleaned) { freq[cleaned, default: 0] += 2 }
+                        if isUsefulPhrase(cleaned) && !TermExtractionTextFilter.isLikelyPersonOrPlace(cleaned) {
+                            freq[cleaned, default: 0] += 2
+                        }
                     }
                 }
             }
@@ -245,6 +250,15 @@ class PDFAnalyzer {
             return false
         }
         if lower.range(of: #"\b(university|institute|laboratory|inc\.?|corp\.?|corporation|ltd\.?|llc|gmbh)\b"#, options: .regularExpression) != nil {
+            return false
+        }
+        if lower.range(of: #"\b(references|bibliography|works cited)\b"#, options: .regularExpression) != nil {
+            return false
+        }
+        if lower.contains("参考文献") || lower.contains("引用文献") {
+            return false
+        }
+        if TermExtractionTextFilter.isLikelyPersonOrPlace(term) {
             return false
         }
         return true

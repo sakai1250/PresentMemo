@@ -23,6 +23,9 @@
 		5A4BB12F2F813F2300582623 /* AIExtractionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BB12E2F813F2300582623 /* AIExtractionService.swift */; };
 		5A4BB1312F81703400582623 /* LlamaExtractionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BB1302F81703400582623 /* LlamaExtractionService.swift */; };
 		5A4BB1372F829C6400582623 /* TranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BB1362F829C6400582623 /* TranslationService.swift */; };
+		5A6A4D3F2F9DC97100E7E96B /* TermExtractionTextFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A4D3E2F9DC97100E7E96B /* TermExtractionTextFilter.swift */; };
+		5A6A4D412F9DCD0C00E7E96B /* ListeningModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A4D402F9DCD0C00E7E96B /* ListeningModeView.swift */; };
+		5A6A4D432F9DD09D00E7E96B /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A4D422F9DD09D00E7E96B /* TutorialView.swift */; };
 		5A742B282F9511930025A676 /* SlideScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A742B272F9511930025A676 /* SlideScore.swift */; };
 		5A742B2A2F9511D60025A676 /* ScoringResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A742B292F9511D60025A676 /* ScoringResultView.swift */; };
 		5A742B2C2F9518820025A676 /* ai_specialized_terms.csv in Resources */ = {isa = PBXBuildFile; fileRef = 5A742B2B2F9518820025A676 /* ai_specialized_terms.csv */; };
@@ -73,6 +76,9 @@
 		5A4BB12E2F813F2300582623 /* AIExtractionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIExtractionService.swift; sourceTree = "<group>"; };
 		5A4BB1302F81703400582623 /* LlamaExtractionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaExtractionService.swift; sourceTree = "<group>"; };
 		5A4BB1362F829C6400582623 /* TranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationService.swift; sourceTree = "<group>"; };
+		5A6A4D3E2F9DC97100E7E96B /* TermExtractionTextFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermExtractionTextFilter.swift; sourceTree = "<group>"; };
+		5A6A4D402F9DCD0C00E7E96B /* ListeningModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningModeView.swift; sourceTree = "<group>"; };
+		5A6A4D422F9DD09D00E7E96B /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		5A742B272F9511930025A676 /* SlideScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideScore.swift; sourceTree = "<group>"; };
 		5A742B292F9511D60025A676 /* ScoringResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringResultView.swift; sourceTree = "<group>"; };
 		5A742B2B2F9518820025A676 /* ai_specialized_terms.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = ai_specialized_terms.csv; sourceTree = "<group>"; };
@@ -149,6 +155,7 @@
 				E908517CC4EC4C7CBF539BDD /* KeywordMLPService.swift */,
 				5A742B2F2F951A200025A676 /* CSVService.swift */,
 				5A742B312F951A310025A676 /* GlossaryManager.swift */,
+				5A6A4D3E2F9DC97100E7E96B /* TermExtractionTextFilter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -214,6 +221,8 @@
 				C55E820AE861EC9CA5CAE240 /* TrainingOverlayView.swift */,
 				5A742B292F9511D60025A676 /* ScoringResultView.swift */,
 				5A742B332F951A5B0025A676 /* GlossaryListView.swift */,
+				5A6A4D402F9DCD0C00E7E96B /* ListeningModeView.swift */,
+				5A6A4D422F9DD09D00E7E96B /* TutorialView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -329,6 +338,7 @@
 				76659BC961F046F5A4C4C7E1 /* HomeView.swift in Sources */,
 				5A742B322F951A310025A676 /* GlossaryManager.swift in Sources */,
 				F8DEBE8D45AD42C9BBC717B3 /* DeckListView.swift in Sources */,
+				5A6A4D432F9DD09D00E7E96B /* TutorialView.swift in Sources */,
 				F9E550DF98AC4994B5DC309D /* DeckDetailView.swift in Sources */,
 				5707383502624E61B654639F /* CardStudyView.swift in Sources */,
 				023BDF3ACA034C2A8B029A9A /* FlipCardView.swift in Sources */,
@@ -345,9 +355,11 @@
 				0C2FA244A41969D15F0814F2 /* CoreMLTokenizerService.swift in Sources */,
 				3CECA210CDC61F0F63308154 /* CLIPVisionEncoder.mlpackage in Sources */,
 				89DD25D5A78439B4A3F52761 /* CLIPTextEncoder.mlpackage in Sources */,
+				5A6A4D3F2F9DC97100E7E96B /* TermExtractionTextFilter.swift in Sources */,
 				D04DE27FE2CD3D9861095238 /* SentenceBERT.mlpackage in Sources */,
 				1844C9139AE625F885FCBD47 /* KeywordMLPService.swift in Sources */,
 				5D1169096E55D08E89229F70 /* TrainingOverlayView.swift in Sources */,
+				5A6A4D412F9DCD0C00E7E96B /* ListeningModeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +407,7 @@
 				ASSET_CATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSET_CATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = GGB524629C;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -427,7 +439,7 @@
 				ASSET_CATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = GGB524629C;
 				GENERATE_INFOPLIST_FILE = NO;

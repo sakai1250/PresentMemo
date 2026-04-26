@@ -43,20 +43,15 @@ struct CardStudyView: View {
 
             VStack(spacing: 10) {
                 Button {
-                    Task { await vm.explainCurrentTermWithLlama() }
+                    vm.explainCurrentCardFromExample()
                 } label: {
-                    Label("説明", systemImage: "sparkles")
+                    Label("例文を見る", systemImage: "text.quote")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(vm.isExplaining)
                 .padding(.horizontal)
 
-                if vm.isExplaining {
-                    ProgressView("説明を生成中...")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } else if !vm.explanationText.isEmpty {
+                if !vm.explanationText.isEmpty {
                     ScrollView {
                         Text(vm.explanationText)
                             .font(.subheadline)

@@ -9,13 +9,14 @@ class QuizGenerator {
     }
 
     private func makeQuestion(for card: Flashcard, pool: [Flashcard]) -> QuizQuestion {
-        let correct = card.definition
+        let correct = quizAnswerText(for: card)
         let candidates = pool
             .filter { $0.id != card.id }
-            .filter { !$0.definition.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
             .map { other in
-                (text: other.definition, score: lexicalSimilarity(correct, other.definition))
+                let answer = quizAnswerText(for: other)
+                return (text: answer, score: lexicalSimilarity(correct, answer))
             }
+            .filter { !$0.text.isEmpty }
             .sorted { $0.score > $1.score }
 
         var distractors = candidates.prefix(3).map(\.text)
@@ -24,7 +25,7 @@ class QuizGenerator {
         if distractors.count < 3 {
             let termBased = pool
                 .filter { $0.id != card.id }
-                .map { "\($0.term): \($0.definition)" }
+                .map { "\($0.term): \(quizAnswerText(for: $0))" }
                 .filter { !distractors.contains($0) && $0 != correct }
             for candidate in termBased where distractors.count < 3 {
                 distractors.append(candidate)
@@ -44,6 +45,23 @@ class QuizGenerator {
         let correctIdx = Int.random(in: 0...3)
         choices.insert(correct, at: correctIdx)
         return QuizQuestion(card: card, choices: choices, correctIndex: correctIdx)
+    }
+
+    private func quizAnswerText(for card: Flashcard) -> String {
+        let example = card.example.trimmingCharacters(in: .whitespacesAndNewlines)
+        if example.hasPrefix("日本語訳:") {
+            let translated = example.replacingOccurrences(of: "日本語訳:", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            if !translated.isEmpty {
+                return translated
+            }
+        }
+
+        let definition = card.definition.trimmingCharacters(in: .whitespacesAndNewlines)
+        if definition.count > 120 {
+            return String(definition.prefix(120))
+        }
+        return definition
     }
 
     private func lexicalSimilarity(_ a: String, _ b: String) -> Int {

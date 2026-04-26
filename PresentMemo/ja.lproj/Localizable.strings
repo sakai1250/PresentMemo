@@ -19,9 +19,13 @@
 /* Modes */
 "mode.default" = "デフォルトモード";
 "mode.default.desc" = "学会頻出語彙（SOTA、ablationなど）を収録";
-"mode.pdf" = "論文解析モード";
-"mode.pdf.desc" = "PDFから重要語句をAIが自動抽出";
-"mode.pptx" = "パワポ連携モード";
+"mode.manual" = "手動入力モード";
+"mode.manual.desc" = "空デッキを作って単語を手入力";
+"mode.csv" = "CSVインポートモード";
+"mode.csv.desc" = "CSVから単語デッキを作成";
+"mode.pdf" = "論文キーワード抽出モード";
+"mode.pdf.desc" = "PDFから提案手法中心の重要語句を抽出";
+"mode.pptx" = "スライドリハーサルモード";
 "mode.pptx.desc" = "リハーサル用にスライドPDFを取り込み（PowerPointはPDF化して入力）";
 
 /* Stats */
@@ -31,12 +35,17 @@
 
 /* Deck */
 "deck.default.name" = "学術用語集";
+"deck.manual.name" = "手動入力デッキ";
+"deck.csv.name" = "CSV単語デッキ";
+"deck.pdf.name" = "論文用語デッキ";
+"deck.pptx.name" = "発表スライドデッキ";
 "deck.cards_count" = "%d枚";
 "deck.create" = "デッキ作成";
 "deck.new_name" = "新しいデッキ";
 "deck.study" = "学習";
 "deck.quiz" = "クイズ";
 "deck.rehearsal" = "リハーサル";
+"deck.listen" = "聞き流し";
 "deck.add_card" = "カード追加";
 "deck.edit_card" = "カード編集";
 "deck.delete_card" = "カード削除";
@@ -75,6 +84,36 @@
 "rehearsal.no_slides" = "このデッキにスライドがありません";
 "rehearsal.seconds" = "%.0f秒";
 "rehearsal.edit_notes" = "セリフ編集";
+"listening.title" = "聞き流しモード";
+"coach.welcome.title" = "PresentMemoへようこそ";
+"coach.welcome.body" = "プレゼン用語のフラッシュカードアプリです。まずは使い方をご案内します。";
+"coach.create.title" = "デッキを作成しよう";
+"coach.create.body" = "モードを選んで新しいデッキを作成できます。手動入力・CSV・PDF・スライドに対応しています。";
+"coach.done.title" = "準備完了！";
+"coach.done.body" = "まずは1つデッキを作って始めましょう。設定画面でリマインダーも設定できます。";
+"coach.skip" = "スキップ";
+"coach.start" = "始める";
+"tutorial.title" = "使い方ガイド";
+"tutorial.done" = "完了";
+"tutorial.next" = "次へ";
+"tutorial.guide.welcome" = "ようこそ";
+"tutorial.guide.welcome.body" = "このガイドは、実際にタップしながら進む誘導式です。";
+"tutorial.guide.step1" = "最初にここタッチ！";
+"tutorial.guide.step1.body" = "下のモード一覧で『手動入力モード』をタップしてください。";
+"tutorial.guide.step2" = "次は保存をタッチ！";
+"tutorial.guide.step2.body" = "手動モードが選ばれた状態で『保存』をタップしてください。";
+"tutorial.guide.step3" = "リマインダー設定";
+"tutorial.guide.step3.body" = "設定画面で、曜日・時間・コメント付きのリマインダーを複数登録できます。";
+"tutorial.guide.done" = "準備OK";
+"tutorial.guide.done.body" = "まずは手動入力デッキを1つ作って、3語だけ追加して始めましょう。";
+"tutorial.page1.title" = "1. デッキを作成";
+"tutorial.page1.body" = "ホームまたはデッキ画面の＋から、手動入力・CSV・PDF・スライド取り込みでデッキを作れます。";
+"tutorial.page2.title" = "2. 学習とクイズ";
+"tutorial.page2.body" = "学習ではカードをめくって確認、クイズでは正誤で習熟度が更新されます。";
+"tutorial.page3.title" = "3. 聞き流しモード";
+"tutorial.page3.body" = "聞き流しは単語ごとに自動再生します。英語テキストは英語音声、日本語テキストは日本語音声で読み上げます。";
+"tutorial.page4.title" = "4. 復習通知";
+"tutorial.page4.body" = "通知は未学習に近い単語を優先して出します。通知間隔は設定画面で変更できます。";
 "deck.slide_notes" = "セリフ一覧";
 "deck.slide_notes_empty" = "（未入力）";
 
@@ -142,6 +181,13 @@
 "settings.ai_enabled" = "AI補強を有効化";
 "settings.ai_hint" = "端末内AI抽出（Foundation Models）を使用します。外部APIキーは不要です。";
 "settings.glossary" = "専門用語辞書";
+"settings.open_tutorial" = "チュートリアルを見る";
+"settings.reminder_empty" = "リマインダーがありません。追加してください。";
+"settings.add_reminder" = "リマインダーを追加";
+"settings.reminder_weekday" = "曜日";
+"settings.reminder_time" = "時間";
+"settings.reminder_comment" = "コメント";
+"settings.reminder_comment_placeholder" = "例: 発表練習 15分";
 
 /* Glossary */
 "glossary.title" = "専門用語辞書";
@@ -164,6 +210,8 @@
 /* Notifications */
 "notification.title" = "学習の時間です！📚";
 "notification.body" = "デッキを復習しましょう：%@";
+"notification.word_body" = "\"%@\" を復習しよう（%@）";
+"notification.fallback_body" = "今日の学習をはじめましょう";
 
 /* General */
 "button.done" = "完了";

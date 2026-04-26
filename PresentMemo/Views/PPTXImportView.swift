@@ -140,12 +140,14 @@ struct PPTXImportView: View {
         let cards: [Flashcard]
         if !aiPairs.isEmpty {
             cards = aiPairs.map { pair in
-                Flashcard(term: pair.term, definition: pair.context)
+                let sentence = pair.context.trimmingCharacters(in: .whitespacesAndNewlines)
+                return Flashcard(term: pair.term, definition: sentence, example: sentence)
             }
         } else {
             // Fallback: create flashcards from slide notes/body.
             cards = slides.enumerated().map { i, s in
-                Flashcard(term: "Slide \(i + 1)", definition: s.notes.isEmpty ? s.bodyText : s.notes)
+                let sentence = (s.notes.isEmpty ? s.bodyText : s.notes).trimmingCharacters(in: .whitespacesAndNewlines)
+                return Flashcard(term: "Slide \(i + 1)", definition: sentence, example: sentence)
             }
         }
         let deck = Deck(

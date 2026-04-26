@@ -38,11 +38,13 @@ final class AIExtractionService {
         guard canUseAI else { return [] }
 
         let normalizedSource = normalizeSource(text)
-        guard !normalizedSource.isEmpty else { return [] }
+        let extractionDomain: TermExtractionDomain = domain == .presentation ? .presentation : .general
+        let filteredSource = TermExtractionTextFilter.preprocessForImportantTerms(normalizedSource, domain: extractionDomain)
+        guard !filteredSource.isEmpty else { return [] }
 
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *) {
-            return await requestFoundationModels(sourceText: normalizedSource, max: max, domain: domain)
+            return await requestFoundationModels(sourceText: filteredSource, max: max, domain: domain)
         }
         #endif
 
@@ -62,7 +64,7 @@ final class AIExtractionService {
 
         do {
             let response = try await session.respond(to: prompt, options: options)
-            return parseModelText(response.content, sourceText: sourceText, max: max)
+            return parseModelText(response.content, sourceText: sourceText, max: max, domain: domain)
         } catch {
             return []
         }
@@ -95,11 +97,13 @@ Return ONLY a JSON array of objects: {"term":"...","context":"..."}.
 Hard constraints:
 - Max items: \(max)
 - Use only terms that literally appear in the provided text.
-- Prioritize: methods, models, datasets, metrics, tasks, abbreviations, key findings.
+- Prioritize the proposed method/approach section and extract method names first.
+- Prioritize: methods, model components, algorithm names, architecture names, abbreviations tied to methods.
 - Exclude generic words (introduction, result, conclusion, overview, etc.).
+- Exclude person names and place names.
 - term length: 1-6 words.
 - context: short explanation from nearby BODY text (max 160 chars).
-- Never use author lists, affiliations, company names, URLs, emails, references, or copyright lines.
+- Never use author lists, affiliations, company names, URLs, emails, references section text, or copyright lines.
 
 Slide text:
 \(content)
@@ -107,12 +111,12 @@ Slide text:
         }
     }
 
-    private func parseModelText(_ modelText: String, sourceText: String, max: Int) -> [(term: String, context: String)] {
+    private func parseModelText(_ modelText: String, sourceText: String, max: Int, domain: Domain) -> [(term: String, context: String)] {
         let jsonText = extractJSONArray(from: modelText) ?? modelText
         guard let jsonData = jsonText.data(using: .utf8) else { return [] }
 
         if let items = try? JSONDecoder().decode([TermContextItem].self, from: jsonData) {
-            return normalize(items: items, sourceText: sourceText, max: max)
+            return normalize(items: items, sourceText: sourceText, max: max, domain: domain)
         }
 
         if let dictItems = try? JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] {
@@ -121,13 +125,13 @@ Slide text:
                 let context = (dict["context"] as? String) ?? term
                 return TermContextItem(term: term, context: context)
             }
-            return normalize(items: mapped, sourceText: sourceText, max: max)
+            return normalize(items: mapped, sourceText: sourceText, max: max, domain: domain)
         }
 
         return []
     }
 
-    private func normalize(items: [TermContextItem], sourceText: String, max: Int) -> [(term: String, context: String)] {
+    private func normalize(items: [TermContextItem], sourceText: String, max: Int, domain: Domain) -> [(term: String, context: String)] {
         let lowerSource = sourceText.lowercased()
 
         var seen: Set<String> = []
@@ -136,6 +140,9 @@ Slide text:
         for item in items {
             let term = clean(item.term)
             guard isGoodTerm(term) else { continue }
+            if domain == .presentation && TermExtractionTextFilter.isLikelyPersonOrPlace(term) {
+                continue
+            }
 
             let lowerTerm = term.lowercased()
             guard lowerSource.contains(lowerTerm) else { continue }
@@ -201,6 +208,8 @@ Slide text:
         if lower.range(of: #"doi:\s*"#, options: .regularExpression) != nil { return false }
         if lower.range(of: #"\b(arxiv|isbn|issn|copyright|all rights reserved|et al\.?)\b"#, options: .regularExpression) != nil { return false }
         if lower.range(of: #"\b(university|institute|laboratory|inc\.?|corp\.?|corporation|ltd\.?|llc|gmbh)\b"#, options: .regularExpression) != nil { return false }
+        if lower.range(of: #"\b(references|bibliography|works cited)\b"#, options: .regularExpression) != nil { return false }
+        if lower.contains("参考文献") || lower.contains("引用文献") { return false }
         if lower.range(of: #"^\s*\[\d+\]"#, options: .regularExpression) != nil { return false }
         return true
     }

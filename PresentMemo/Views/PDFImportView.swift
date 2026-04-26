@@ -269,7 +269,7 @@ struct PDFImportView: View {
                         lastSourceText = joined
                         selected = Set(terms.prefix(30).map { $0.term })
                         if slideDeckName.isEmpty {
-                            slideDeckName = L("mode.pptx")
+                            slideDeckName = L("deck.pptx.name")
                         }
                         analyzing = false
                     }
@@ -288,7 +288,11 @@ struct PDFImportView: View {
                     if enableAIExtraction {
                         await updateProgress(0.55, status: L("pdf.step.ai_analysis"))
                         let t2 = CFAbsoluteTimeGetCurrent()
-                        aiTerms = await AIExtractionService.shared.extractTermContextPairs(from: text, max: 80)
+                        aiTerms = await AIExtractionService.shared.extractTermContextPairs(
+                            from: text,
+                            max: 80,
+                            domain: .presentation
+                        )
                         print("⏱️ [3] AIサービス 重要単語抽出: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t2))秒")
                     } else {
                         aiTerms = []
@@ -350,7 +354,7 @@ struct PDFImportView: View {
                 if let id = targetDeckId {
                     deckVM.addCards(newCards, toDeck: id)
                 } else {
-                    let deck = Deck(name: L("mode.pdf"), mode: .pdfAnalysis, cards: newCards)
+                    let deck = Deck(name: L("deck.pdf.name"), mode: .pdfAnalysis, cards: newCards)
                     deckVM.add(deck)
                     onComplete?()
                 }
@@ -362,7 +366,7 @@ struct PDFImportView: View {
 
     private func importSlideDeck() {
         let finalName = slideDeckName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            ? L("mode.pptx")
+            ? L("deck.pptx.name")
             : slideDeckName.trimmingCharacters(in: .whitespacesAndNewlines)
         let allCandidates = results
         let sourceText = lastSourceText
@@ -427,12 +431,16 @@ struct PDFImportView: View {
             for (index, item) in items.enumerated() {
                 group.addTask {
                     let baseContext = item.context.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let sentence = baseContext.isEmpty ? item.term : baseContext
                     let translated = await TranslationService.shared.translateTermToJapanese(item.term)
-                    
+
                     if let ja = translated, !ja.isEmpty, ja.lowercased() != item.term.lowercased() {
-                        return (index, Flashcard(term: item.term, definition: ja, example: baseContext))
+                        return (
+                            index,
+                            Flashcard(term: item.term, definition: sentence, example: "日本語訳: \(ja)")
+                        )
                     } else {
-                        return (index, Flashcard(term: item.term, definition: baseContext.isEmpty ? item.term : baseContext))
+                        return (index, Flashcard(term: item.term, definition: sentence, example: sentence))
                     }
                 }
             }
