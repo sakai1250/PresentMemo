@@ -3,6 +3,9 @@ import AVFoundation
 
 struct ListeningModeView: View {
     @StateObject private var vm: ListeningModeViewModel
+    @AppStorage("listening.playbackMode") private var playbackModeRawValue: Int = ListeningPlaybackMode.termThenDefinition.rawValue
+    @AppStorage("listening.loopEnabled") private var loopEnabled: Bool = false
+    @AppStorage("listening.intervalSeconds") private var intervalSeconds: Double = 1.0
 
     init(deck: Deck) {
         _vm = StateObject(wrappedValue: ListeningModeViewModel(deck: deck))
@@ -16,6 +19,44 @@ struct ListeningModeView: View {
                     .foregroundStyle(.secondary)
                 Spacer()
             } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    Picker(L("listening.mode"), selection: Binding(
+                        get: { ListeningPlaybackMode(rawValue: playbackModeRawValue) ?? .termThenDefinition },
+                        set: { value in
+                            playbackModeRawValue = value.rawValue
+                            vm.playbackMode = value
+                        }
+                    )) {
+                        ForEach(ListeningPlaybackMode.allCases, id: \.self) { mode in
+                            Text(mode.labelKey).tag(mode)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+
+                    Toggle(L("listening.loop"), isOn: Binding(
+                        get: { loopEnabled },
+                        set: { value in
+                            loopEnabled = value
+                            vm.loopEnabled = value
+                        }
+                    ))
+
+                    HStack {
+                        Text(L("listening.interval"))
+                        Spacer()
+                        Text(String(format: L("listening.interval_value"), intervalSeconds))
+                            .foregroundStyle(.secondary)
+                    }
+                    Slider(value: Binding(
+                        get: { intervalSeconds },
+                        set: { value in
+                            intervalSeconds = value
+                            vm.intervalSeconds = value
+                        }
+                    ), in: 0...5, step: 0.5)
+                }
+                .padding(.horizontal)
+
                 Text("\(vm.currentIndex + 1) / \(vm.cards.count)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -61,7 +102,24 @@ struct ListeningModeView: View {
         .padding(.top)
         .navigationTitle(L("listening.title"))
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            vm.playbackMode = ListeningPlaybackMode(rawValue: playbackModeRawValue) ?? .termThenDefinition
+            vm.loopEnabled = loopEnabled
+            vm.intervalSeconds = intervalSeconds
+        }
         .onDisappear { vm.stop() }
+    }
+}
+
+enum ListeningPlaybackMode: Int, CaseIterable {
+    case termThenDefinition
+    case termOnly
+
+    var labelKey: String {
+        switch self {
+        case .termThenDefinition: return L("listening.mode.term_to_definition")
+        case .termOnly: return L("listening.mode.term_only")
+        }
     }
 }
 
@@ -69,9 +127,14 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
     @Published var currentIndex: Int = 0
     @Published var isPlaying: Bool = false
 
+    var playbackMode: ListeningPlaybackMode = .termThenDefinition
+    var loopEnabled: Bool = false
+    var intervalSeconds: Double = 1.0
+
     let cards: [Flashcard]
     private let synthesizer = AVSpeechSynthesizer()
     private var remainingUtterancesInCurrentCard = 0
+    private var scheduledAdvance: DispatchWorkItem?
 
     var currentCard: Flashcard {
         cards[currentIndex]
@@ -99,11 +162,15 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
     }
 
     func pause() {
+        scheduledAdvance?.cancel()
+        scheduledAdvance = nil
         synthesizer.pauseSpeaking(at: .word)
         isPlaying = false
     }
 
     func stop() {
+        scheduledAdvance?.cancel()
+        scheduledAdvance = nil
         synthesizer.stopSpeaking(at: .immediate)
         remainingUtterancesInCurrentCard = 0
         isPlaying = false
@@ -111,6 +178,8 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
 
     func next() {
         guard !cards.isEmpty else { return }
+        scheduledAdvance?.cancel()
+        scheduledAdvance = nil
         currentIndex = min(currentIndex + 1, cards.count - 1)
         if isPlaying {
             synthesizer.stopSpeaking(at: .immediate)
@@ -120,6 +189,8 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
 
     func previous() {
         guard !cards.isEmpty else { return }
+        scheduledAdvance?.cancel()
+        scheduledAdvance = nil
         currentIndex = max(currentIndex - 1, 0)
         if isPlaying {
             synthesizer.stopSpeaking(at: .immediate)
@@ -135,25 +206,19 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
         }
 
         guard remainingUtterancesInCurrentCard == 0 else { return }
-
-        if currentIndex < cards.count - 1 {
-            currentIndex += 1
-            speakCurrentCard()
-        } else {
-            isPlaying = false
-        }
+        scheduleAdvanceToNextCard()
     }
 
     private func speakCurrentCard() {
         guard !cards.isEmpty else { return }
 
         let card = currentCard
-        let segments = [card.term, card.definition, card.example]
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
+        let segments = playbackSegments(for: card)
 
         guard !segments.isEmpty else { return }
 
+        scheduledAdvance?.cancel()
+        scheduledAdvance = nil
         synthesizer.stopSpeaking(at: .immediate)
         remainingUtterancesInCurrentCard = segments.count
 
@@ -164,6 +229,35 @@ final class ListeningModeViewModel: NSObject, ObservableObject, AVSpeechSynthesi
             utterance.pitchMultiplier = 1.0
             synthesizer.speak(utterance)
         }
+    }
+
+    private func playbackSegments(for card: Flashcard) -> [String] {
+        switch playbackMode {
+        case .termThenDefinition:
+            return [card.term, card.definition]
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+        case .termOnly:
+            let term = card.term.trimmingCharacters(in: .whitespacesAndNewlines)
+            return term.isEmpty ? [] : [term]
+        }
+    }
+
+    private func scheduleAdvanceToNextCard() {
+        let work = DispatchWorkItem { [weak self] in
+            guard let self, self.isPlaying else { return }
+            if self.currentIndex < self.cards.count - 1 {
+                self.currentIndex += 1
+                self.speakCurrentCard()
+            } else if self.loopEnabled {
+                self.currentIndex = 0
+                self.speakCurrentCard()
+            } else {
+                self.isPlaying = false
+            }
+        }
+        scheduledAdvance = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + max(0, intervalSeconds), execute: work)
     }
 
     private func preferredLanguage(for text: String) -> String {

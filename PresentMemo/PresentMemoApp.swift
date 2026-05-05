@@ -6,7 +6,6 @@ struct PresentMemoApp: App {
     @StateObject private var coachMarkManager = CoachMarkManager()
 
     init() {
-        NotificationManager.shared.requestPermission()
         UserDefaults.standard.register(defaults: [
             "ai.enabled": true
         ])

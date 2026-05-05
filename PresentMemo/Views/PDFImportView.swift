@@ -224,28 +224,28 @@ struct PDFImportView: View {
                 
                 let analyzer = PDFAnalyzer()
                 if isSlideMode {
-                    await updateProgress(0.05, status: L("pdf.step.extracting_text"))
+                    updateProgress(0.05, status: L("pdf.step.extracting_text"))
                     let t0 = CFAbsoluteTimeGetCurrent()
                     let pages = analyzer.extractPageTexts(from: url)
                     print("⏱️ [1] PDFテキスト抽出完了: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t0))秒")
                     
                     let normalizedPages = pages.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                     
-                    await updateProgress(0.15, status: L("pdf.step.rendering_images"))
+                    updateProgress(0.15, status: L("pdf.step.rendering_images"))
                     let t1 = CFAbsoluteTimeGetCurrent()
                     let pageImages = renderSlideImages(from: url)
                     print("⏱️ [2] PDF画像レンダリング完了: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t1))秒")
                     
                     let joined = normalizedPages.joined(separator: "\n\n")
                     
-                    await updateProgress(0.30, status: L("pdf.step.extracting_keywords"))
+                    updateProgress(0.30, status: L("pdf.step.extracting_keywords"))
                     let t2 = CFAbsoluteTimeGetCurrent()
                     let localTerms = await analyzer.extractKeyTerms(from: joined, max: 80)
                     print("⏱️ [3] PDFAnalyzer(CoreML等) 重要単語抽出: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t2))秒")
                     
                     let aiTerms: [(term: String, context: String)]
                     if enableAIExtraction {
-                        await updateProgress(0.60, status: L("pdf.step.ai_analysis"))
+                        updateProgress(0.60, status: L("pdf.step.ai_analysis"))
                         let t3 = CFAbsoluteTimeGetCurrent()
                         aiTerms = await AIExtractionService.shared.extractTermContextPairs(
                             from: joined,
@@ -258,7 +258,7 @@ struct PDFImportView: View {
                         print("⚡️ [4] AIサービス 重要単語抽出: OFF")
                     }
 
-                    await updateProgress(0.90, status: L("pdf.step.finalizing"))
+                    updateProgress(0.90, status: L("pdf.step.finalizing"))
                     let terms = mergeTerms(ai: aiTerms, local: localTerms)
                     
                     await MainActor.run {
@@ -274,19 +274,19 @@ struct PDFImportView: View {
                         analyzing = false
                     }
                 } else {
-                    await updateProgress(0.05, status: L("pdf.step.extracting_text"))
+                    updateProgress(0.05, status: L("pdf.step.extracting_text"))
                     let t0 = CFAbsoluteTimeGetCurrent()
                     let text = analyzer.extractText(from: url)
                     print("⏱️ [1] PDFテキスト抽出全体完了: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t0))秒")
                     
-                    await updateProgress(0.20, status: L("pdf.step.extracting_keywords"))
+                    updateProgress(0.20, status: L("pdf.step.extracting_keywords"))
                     let t1 = CFAbsoluteTimeGetCurrent()
                     let localTerms = await analyzer.extractKeyTerms(from: text)
                     print("⏱️ [2] PDFAnalyzer(CoreML等) 重要単語抽出: \(String(format: "%.2f", CFAbsoluteTimeGetCurrent() - t1))秒")
                     
                     let aiTerms: [(term: String, context: String)]
                     if enableAIExtraction {
-                        await updateProgress(0.55, status: L("pdf.step.ai_analysis"))
+                        updateProgress(0.55, status: L("pdf.step.ai_analysis"))
                         let t2 = CFAbsoluteTimeGetCurrent()
                         aiTerms = await AIExtractionService.shared.extractTermContextPairs(
                             from: text,
@@ -299,7 +299,7 @@ struct PDFImportView: View {
                         print("⚡️ [3] AIサービス 重要単語抽出: OFF")
                     }
 
-                    await updateProgress(0.90, status: L("pdf.step.finalizing"))
+                    updateProgress(0.90, status: L("pdf.step.finalizing"))
                     let terms = mergeTerms(ai: aiTerms, local: localTerms)
                     await MainActor.run {
                         analysisProgress = 1.0

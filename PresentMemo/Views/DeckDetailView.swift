@@ -26,7 +26,12 @@ struct DeckDetailView: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.secondary.opacity(0.12)).cornerRadius(16)
+                .background(StudyTheme.card)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(StudyTheme.border, lineWidth: 1)
+                )
+                .cornerRadius(16)
                 .padding(.horizontal)
 
                 // Action buttons
@@ -120,13 +125,15 @@ struct DeckDetailView: View {
             }
             .padding(.vertical)
         }
+        .background(StudyTheme.background.ignoresSafeArea())
         .navigationTitle(currentDeck.name)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     editorMode = .create
                 } label: {
-                    Label(L("deck.add_card"), systemImage: "plus")
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title3)
                 }
                 .coachMarkTarget(.addCard)
             }
@@ -335,7 +342,7 @@ struct ActionButton: View {
             Text(title).font(.caption).bold().foregroundStyle(.primary)
         }
         .frame(maxWidth: .infinity).padding(.vertical, 14)
-        .background(color.opacity(0.12)).cornerRadius(14)
+        .background(StudyTheme.accentSoft).cornerRadius(14)
     }
 }
 
@@ -364,7 +371,12 @@ struct CardRow: View {
             .buttonStyle(.plain)
         }
         .padding()
-        .background(Color.primary.opacity(0.03)).cornerRadius(10)
+        .background(StudyTheme.card)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(StudyTheme.border, lineWidth: 1)
+        )
+        .cornerRadius(10)
         .shadow(color: .black.opacity(0.04), radius: 3, y: 1)
     }
 }
@@ -429,7 +441,12 @@ struct SlideNoteRow: View {
             .buttonStyle(.plain)
         }
         .padding()
-        .background(Color.primary.opacity(0.03)).cornerRadius(10)
+        .background(StudyTheme.card)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(StudyTheme.border, lineWidth: 1)
+        )
+        .cornerRadius(10)
         .shadow(color: .black.opacity(0.04), radius: 3, y: 1)
     }
 

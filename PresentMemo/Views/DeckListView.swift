@@ -18,6 +18,8 @@ struct DeckListView: View {
                 .onDelete(perform: deckVM.delete)
             }
             .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(StudyTheme.background)
             .navigationTitle(L("tab.decks"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

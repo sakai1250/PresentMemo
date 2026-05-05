@@ -99,7 +99,7 @@ class NotificationManager {
         let content = UNMutableNotificationContent()
         content.title = NSLocalizedString("notification.title", comment: "")
 
-        if let target = weakestCard(from: decks) {
+        if let target = randomCard(from: decks) {
             content.body = String(
                 format: NSLocalizedString("notification.word_body", comment: ""),
                 target.card.term,
@@ -123,22 +123,13 @@ class NotificationManager {
         return content
     }
 
-    private func weakestCard(from decks: [Deck]) -> (deckName: String, card: Flashcard)? {
+    private func randomCard(from decks: [Deck]) -> (deckName: String, card: Flashcard)? {
         decks
             .flatMap { deck in
                 deck.cards.map { (deckName: deck.name, card: $0) }
             }
             .filter { !$0.card.term.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-            .sorted {
-                if $0.card.mastery != $1.card.mastery {
-                    return $0.card.mastery < $1.card.mastery
-                }
-                if $0.card.reviewCount != $1.card.reviewCount {
-                    return $0.card.reviewCount < $1.card.reviewCount
-                }
-                return $0.card.term.localizedCaseInsensitiveCompare($1.card.term) == .orderedAscending
-            }
-            .first
+            .randomElement()
     }
 
     private func defaultRules() -> [ReminderRule] {

@@ -1,5 +1,9 @@
 /* App */
-"app.name" = "PresentMemo";
+"app.name" = "MAIORAL";
+"start.title" = "Start with the big picture";
+"start.subtitle" = "MAIORAL is a memorization app that connects deck creation, study, listening, and notification-based review in one flow.";
+"start.cta" = "Get Started";
+"start.tutorial_cta" = "Start Tap-by-Tap Tutorial";
 
 /* Tabs */
 "tab.home" = "Home";
@@ -7,7 +11,7 @@
 "tab.settings" = "Settings";
 
 /* Home */
-"home.welcome" = "Welcome to PresentMemo";
+"home.welcome" = "Welcome to MAIORAL";
 "home.subtitle" = "Master your presentations with smart flashcards";
 "home.recent" = "Recent Decks";
 "home.new_deck" = "Create New Deck";
@@ -85,6 +89,12 @@
 "rehearsal.seconds" = "%.0f sec";
 "rehearsal.edit_notes" = "Edit Script";
 "listening.title" = "Listening Mode";
+"listening.mode" = "Playback Mode";
+"listening.mode.term_to_definition" = "EN -> JA";
+"listening.mode.term_only" = "EN only";
+"listening.loop" = "Loop Playback";
+"listening.interval" = "Playback Interval";
+"listening.interval_value" = "%.1f sec";
 "coach.tap_create.title" = "Create a Deck!";
 "coach.tap_create.body" = "Tap the + button in the top right to create a new deck.";
 "coach.select_manual.title" = "Select Manual Mode";
@@ -115,13 +125,13 @@
 "tutorial.guide.done" = "You're all set";
 "tutorial.guide.done.body" = "Create one manual deck first and add just 3 words to get started.";
 "tutorial.page1.title" = "1. Create a Deck";
-"tutorial.page1.body" = "Use + on Home or Decks to create decks from manual input, CSV, PDF, or slide import.";
+"tutorial.page1.body" = "Use + on Home or Decks to create decks from manual input, CSV, PDF, or slide import. Splitting decks by purpose makes review easier.";
 "tutorial.page2.title" = "2. Study and Quiz";
-"tutorial.page2.body" = "In Study, flip cards to check. In Quiz, correct/incorrect answers update mastery.";
+"tutorial.page2.body" = "In Study, flip cards to check. In Quiz, correct/incorrect answers update mastery. Mastery is reflected in lists and progress rings.";
 "tutorial.page3.title" = "3. Listening Mode";
-"tutorial.page3.body" = "Cards are read aloud sequentially. English text uses English voice, Japanese text uses Japanese voice.";
+"tutorial.page3.body" = "Cards are read aloud sequentially. You can configure loop playback, EN -> JA mode, EN-only mode, and playback interval for hands-free review.";
 "tutorial.page4.title" = "4. Review Notifications";
-"tutorial.page4.body" = "Notifications prioritize less-mastered words. You can change interval in Settings.";
+"tutorial.page4.body" = "Notifications send a random word from your decks. You can add multiple weekday/time reminders in Settings for quick recall sessions.";
 "deck.slide_notes" = "Slide Scripts";
 "deck.slide_notes_empty" = "(empty)";
 
@@ -176,6 +186,7 @@
 /* Settings */
 "settings.title" = "Settings";
 "settings.notifications" = "Notifications";
+"settings.request_notification_permission" = "Allow Notifications";
 "settings.notification_interval" = "Reminder Interval";
 "settings.about" = "About";
 "settings.version" = "Version";

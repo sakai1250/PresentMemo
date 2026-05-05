@@ -86,6 +86,7 @@ struct HomeView: View {
                 }
                 .padding(.vertical)
             }
+            .background(StudyTheme.background.ignoresSafeArea())
             .navigationTitle(L("app.name"))
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -147,7 +148,12 @@ struct StatPill: View {
             Text(label).font(.caption2).foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity).padding(.vertical, 12)
-        .background(color.opacity(0.1)).cornerRadius(12)
+        .background(StudyTheme.card)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(StudyTheme.border, lineWidth: 1)
+        )
+        .cornerRadius(12)
     }
 }
 
@@ -186,7 +192,11 @@ struct ModeCard: View {
                 Image(systemName: "chevron.right").foregroundStyle(.tertiary)
             }
             .padding()
-            .background(Color.primary.opacity(0.03))
+            .background(StudyTheme.card)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(StudyTheme.border, lineWidth: 1)
+            )
             .cornerRadius(14)
             .shadow(color: .black.opacity(0.06), radius: 6, y: 2)
         }
@@ -210,7 +220,11 @@ struct DeckRowCard: View {
             ProgressRing(progress: deck.progressRatio, size: 32)
         }
         .padding()
-        .background(Color.primary.opacity(0.03))
+        .background(StudyTheme.card)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(StudyTheme.border, lineWidth: 1)
+        )
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, y: 1)
     }
@@ -238,4 +252,13 @@ struct ProgressRing: View {
         .frame(width: size, height: size)
         .animation(.easeInOut, value: progress)
     }
+}
+
+enum StudyTheme {
+    static let background = Color(red: 0.96, green: 0.97, blue: 0.95)
+    static let card = Color.white
+    static let accent = Color(red: 0.07, green: 0.54, blue: 0.52)
+    static let accentSoft = Color(red: 0.87, green: 0.95, blue: 0.94)
+    static let navy = Color(red: 0.15, green: 0.22, blue: 0.34)
+    static let border = Color.black.opacity(0.06)
 }

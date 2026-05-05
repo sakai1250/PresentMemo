@@ -7,8 +7,6 @@ struct SettingsView: View {
     @State private var showAddReminder = false
     @State private var reminderRules: [ReminderRule] = []
 
-    @AppStorage("ai.enabled") private var aiEnabled = true
-
     var body: some View {
         NavigationStack {
             Form {
@@ -50,13 +48,6 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(header: Text(L("settings.ai"))) {
-                    Toggle(L("settings.ai_enabled"), isOn: $aiEnabled)
-                    Text(L("settings.ai_hint"))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-
                 Section(header: Text(L("settings.glossary"))) {
                     NavigationLink {
                         GlossaryListView()
@@ -94,6 +85,7 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showAddReminder) {
                 ReminderRuleEditorSheet { weekday, hour, minute, comment in
+                    NotificationManager.shared.requestPermission()
                     reminderRules.append(ReminderRule(weekday: weekday, hour: hour, minute: minute, comment: comment))
                     NotificationManager.shared.saveRules(reminderRules, decks: deckVM.decks)
                 }

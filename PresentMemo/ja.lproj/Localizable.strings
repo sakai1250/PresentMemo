@@ -1,5 +1,9 @@
 /* App */
-"app.name" = "PresentMemo";
+"app.name" = "MAIORAL";
+"start.title" = "最初に全体像をつかもう";
+"start.subtitle" = "MAIORALは、作成→学習→聞き流し→通知復習までを1つの流れで回せる暗記アプリです。";
+"start.cta" = "はじめる";
+"start.tutorial_cta" = "タップ式チュートリアルを開始";
 
 /* Tabs */
 "tab.home" = "ホーム";
@@ -7,7 +11,7 @@
 "tab.settings" = "設定";
 
 /* Home */
-"home.welcome" = "PresentMemoへようこそ";
+"home.welcome" = "MAIORALへようこそ";
 "home.subtitle" = "スマートなフラッシュカードでプレゼンを極める";
 "home.recent" = "最近のデッキ";
 "home.new_deck" = "新しいデッキを作成";
@@ -85,6 +89,12 @@
 "rehearsal.seconds" = "%.0f秒";
 "rehearsal.edit_notes" = "セリフ編集";
 "listening.title" = "聞き流しモード";
+"listening.mode" = "再生モード";
+"listening.mode.term_to_definition" = "英訳→和訳";
+"listening.mode.term_only" = "英訳のみ";
+"listening.loop" = "ループ再生";
+"listening.interval" = "再生間隔";
+"listening.interval_value" = "%.1f秒";
 "coach.tap_create.title" = "デッキを作ろう！";
 "coach.tap_create.body" = "右上の＋ボタンをタップして、新しいデッキを作成しましょう。";
 "coach.select_manual.title" = "手動入力モードを選択";
@@ -115,13 +125,13 @@
 "tutorial.guide.done" = "準備OK";
 "tutorial.guide.done.body" = "まずは手動入力デッキを1つ作って、3語だけ追加して始めましょう。";
 "tutorial.page1.title" = "1. デッキを作成";
-"tutorial.page1.body" = "ホームまたはデッキ画面の＋から、手動入力・CSV・PDF・スライド取り込みでデッキを作れます。";
+"tutorial.page1.body" = "ホームまたはデッキ画面の＋から、手動入力・CSV・PDF・スライド取り込みでデッキを作れます。用途別にデッキを分けると復習しやすくなります。";
 "tutorial.page2.title" = "2. 学習とクイズ";
-"tutorial.page2.body" = "学習ではカードをめくって確認、クイズでは正誤で習熟度が更新されます。";
+"tutorial.page2.body" = "学習ではカードをめくって確認し、クイズでは正誤で習熟度が更新されます。習熟度は一覧や進捗リングに反映されます。";
 "tutorial.page3.title" = "3. 聞き流しモード";
-"tutorial.page3.body" = "聞き流しは単語ごとに自動再生します。英語テキストは英語音声、日本語テキストは日本語音声で読み上げます。";
+"tutorial.page3.body" = "聞き流しは単語ごとに自動再生します。ループ再生・英訳→和訳・英訳のみ・再生間隔を設定でき、移動中の復習に向いています。";
 "tutorial.page4.title" = "4. 復習通知";
-"tutorial.page4.body" = "通知は未学習に近い単語を優先して出します。通知間隔は設定画面で変更できます。";
+"tutorial.page4.body" = "通知はデッキからランダムな単語を出します。曜日と時間は設定画面で複数登録でき、短時間の思い出し復習に使えます。";
 "deck.slide_notes" = "セリフ一覧";
 "deck.slide_notes_empty" = "（未入力）";
 
@@ -176,6 +186,7 @@
 /* Settings */
 "settings.title" = "設定";
 "settings.notifications" = "通知";
+"settings.request_notification_permission" = "通知を許可する";
 "settings.notification_interval" = "リマインダー間隔";
 "settings.about" = "このアプリについて";
 "settings.version" = "バージョン";
