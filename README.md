@@ -33,7 +33,6 @@ MAIORAL（マイオーラル）は、
 「覚えるだけ」で終わらず、
 「本番で口から出る」まで持っていくのがMAIORALです。
 
-Memorize + AI + Oral
 発表前の追い込み、ちょっとだけラクにしませんか？
 
 ## Privacy Policy
